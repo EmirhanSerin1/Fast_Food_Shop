@@ -1,39 +1,120 @@
+import 'package:fast_food_shop/foodTabs/food_tabs.dart';
 import 'package:flutter/material.dart';
 
 import 'elements/appbar_custom.dart';
+import 'elements/recommended.dart';
 import 'elements/search_box.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
+  TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 4, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         children: [
           buildCustomAppbar(),
-          buildText("SEARCH FOR"),
-          buildText("RECIPES"),
+          buildText("SEARCH FOR", 26, FontWeight.w700),
+          buildText("RECIPES", 26, FontWeight.w700),
           SizedBox(height: 20),
           buildSearchBox(),
+          SizedBox(height: 20),
+          buildText("Recommended", 18, FontWeight.w500),
+          SizedBox(height: 15),
+          buildRecommendedsPart(),
+          SizedBox(height: 10),
+          Padding(
+            padding: EdgeInsets.only(left: 15),
+            child: TabBar(
+              controller: tabController,
+              isScrollable: true,
+              indicatorColor: Colors.transparent,
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey.withOpacity(0.5),
+              labelStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+              unselectedLabelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+              tabs: [
+                Tab(child: Text("FEATURED")),
+                Tab(child: Text("COMBO")),
+                Tab(child: Text("FAVORİTES")),
+                Tab(child: Text("RECOMMENDED")),
+              ],
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height - 450,
+            child: TabBarView(
+              controller: tabController,
+              children: [
+                FoodTab(),
+                FoodTab(),
+                FoodTab(),
+                FoodTab(),
+              ],
+            ),
+          )
         ],
       ),
     );
   }
 
-  Padding buildText(String text) {
+  Container buildRecommendedsPart() {
+    return Container(
+      height: 200,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          buildFoods(
+            'Hamburger',
+            "assets/food/hamburger.png",
+            '13',
+            Color(0xFFF5EEB2),
+            Color(0xFF948D51),
+          ),
+          buildFoods(
+            'Pizza',
+            "assets/food/pizza.png",
+            '8',
+            Color(0xFFB2F5C8),
+            Color(0xFF649451),
+          ),
+          buildFoods(
+            'French Fries',
+            "assets/food/frenchfries.png",
+            '5',
+            Color(0xFFB2CAF5),
+            Color(0xFF515D94),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding buildText(String text, double size, FontWeight weight) {
     return Padding(
       padding: EdgeInsets.only(left: 15),
       child: Text(
         text,
         style: TextStyle(
-          fontWeight: FontWeight.w800,
-          fontSize: 27,
+          fontWeight: weight,
+          fontSize: size,
+          color: Color(0xFF1A1818),
         ),
       ),
     );
