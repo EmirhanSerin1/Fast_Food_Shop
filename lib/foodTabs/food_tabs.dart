@@ -15,7 +15,10 @@ class _FoodTabState extends State<FoodTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        children: [_buildListItem("Hot Hot Dog", 4, "6", "assets/food/hotdog.png")],
+        children: [
+          _buildListItem("Hot Hot Dog", 4, "6", "assets/food/hotdog.png"),
+          _buildListItem("Crazy Popcorn", 3, "3", "assets/food/popcorn.png"),
+        ],
       ),
     );
   }
@@ -81,6 +84,25 @@ class _FoodTabState extends State<FoodTab> {
                 ],
               )
             ],
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              width: 45,
+              height: 45,
+              decoration: BoxDecoration(
+                color: Color(0xFFFD6750),
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 5,
+                    offset: Offset(2, 3),
+                  ),
+                ],
+              ),
+              child: Icon(Icons.add),
+            ),
           )
         ],
       ),
