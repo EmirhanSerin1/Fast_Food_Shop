@@ -85,6 +85,7 @@ class _FoodTabState extends State<FoodTab> {
               )
             ],
           ),
+          
           GestureDetector(
             onTap: () {},
             child: Container(

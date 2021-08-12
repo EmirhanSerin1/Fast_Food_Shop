@@ -1,10 +1,22 @@
+import 'package:fast_food_shop/screens/burger/burger.dart';
 import 'package:flutter/material.dart';
 
-buildFoods(String foodName, String imagePath, String price, Color color, Color textColor) {
+buildFoods(String foodName, String imagePath, String price, Color color, Color textColor, BuildContext context) {
   return Padding(
     padding: EdgeInsets.only(left: 15),
     child: InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => Burger(
+              foodName: foodName,
+              price: price,
+              imagePath: imagePath,
+              heroTag: foodName,
+            ),
+          ),
+        );
+      },
       child: Container(
         height: 175,
         width: 150,
@@ -36,11 +48,11 @@ buildFoods(String foodName, String imagePath, String price, Color color, Color t
             SizedBox(height: 25),
             Text(
               foodName,
-              style: TextStyle(fontSize: 17, color:  textColor),
+              style: TextStyle(fontSize: 17, color: textColor),
             ),
             Text(
               "\$" + price,
-              style: TextStyle(fontSize: 17, color:  textColor),
+              style: TextStyle(fontSize: 17, color: textColor),
             )
           ],
         ),

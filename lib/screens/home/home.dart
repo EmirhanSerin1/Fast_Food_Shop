@@ -86,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             '13',
             Color(0xFFF5EEB2),
             Color(0xFF948D51),
+            context,
           ),
           buildFoods(
             'Pizza',
@@ -93,6 +94,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             '8',
             Color(0xFFB2F5C8),
             Color(0xFF649451),
+            context,
+
           ),
           buildFoods(
             'French Fries',
@@ -100,6 +103,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             '5',
             Color(0xFFB2CAF5),
             Color(0xFF515D94),
+            context,
+
           ),
         ],
       ),
