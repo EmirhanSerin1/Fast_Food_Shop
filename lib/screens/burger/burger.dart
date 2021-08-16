@@ -168,7 +168,7 @@ class _BurgerState extends State<Burger> {
                 color: Colors.white,
                 child: Center(
                   child: Text(
-                    "\$" + (int.parse(widget.price) + quantity).toString(),
+                    "\$" + (int.parse(widget.price) * quantity).toString(),
                     style: TextStyle(
                       fontSize: 40,
                       color: Color(0xFF484A4E),
@@ -188,11 +188,105 @@ class _BurgerState extends State<Burger> {
                     )),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [],
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 110,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                addQuantity("REMOVE");
+                              },
+                              icon: Icon(
+                                Icons.remove,
+                                color: Color(0xFFF56953),
+                              )),
+                          Text(
+                            netPrice.toString(),
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xFFF56953),
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                addQuantity("ADD");
+                              },
+                              icon: Icon(
+                                Icons.add,
+                                color: Color(0xFFF56953),
+                              )),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      "Add to cart",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
                 ),
               )
             ],
+          ),
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Text(
+              "FEATURED",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          Container(
+            height: 225,
+            width: MediaQuery.of(context).size.width,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _buildList("1"),
+                _buildList("1"),
+              ],
+            ),
           )
+        ],
+      ),
+    );
+  }
+
+  addQuantity(pressed) {
+    switch (pressed) {
+      case "ADD":
+        setState(() {
+          quantity += 1;
+        });
+        return;
+      case "REMOVE":
+        setState(() {
+          if (quantity != 0) {
+            quantity -= 1;
+          }
+        });
+        return;
+    }
+  }
+
+  _buildList(String columnNumber) {
+    return Padding(
+      padding: EdgeInsets.all(15),
+      child: Column(
+        children: [
+          
         ],
       ),
     );
