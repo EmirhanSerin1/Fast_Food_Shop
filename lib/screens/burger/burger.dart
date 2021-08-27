@@ -286,7 +286,11 @@ class _BurgerState extends State<Burger> {
       padding: EdgeInsets.all(15),
       child: Column(
         children: [
-          
+          Row(
+            children: [
+              
+            ],
+          )
         ],
       ),
     );

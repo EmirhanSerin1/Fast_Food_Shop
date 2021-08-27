@@ -18,7 +18,7 @@ buildFoods(String foodName, String imagePath, String price, Color color, Color t
         );
       },
       child: Container(
-        height: 175,
+        height: 174,
         width: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),

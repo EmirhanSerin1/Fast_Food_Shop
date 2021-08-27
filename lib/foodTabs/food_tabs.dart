@@ -16,7 +16,7 @@ class _FoodTabState extends State<FoodTab> {
     return Scaffold(
       body: ListView(
         children: [
-          _buildListItem("Hot Hot Dog", 4, "6", "assets/food/hotdog.png"),
+          _buildListItem("Crazy Hot Dog", 4, "6", "assets/food/hotdog.png"),
           _buildListItem("Crazy Popcorn", 3, "3", "assets/food/popcorn.png"),
         ],
       ),

@@ -4,7 +4,7 @@ buildSearchBox() {
   return Padding(
     padding: EdgeInsets.only(left: 16, right: 16),
     child: Container(
-      padding: EdgeInsets.only(left: 5),
+      padding: EdgeInsets.only(left: 6),
       decoration: BoxDecoration(
         color: Colors.grey.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12),
