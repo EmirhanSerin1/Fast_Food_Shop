@@ -122,27 +122,7 @@ class _BurgerState extends State<Burger> {
             ],
           ),
           SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: 70,
-                width: 120,
-                color: Colors.white,
-                child: Center(
-                  child: Text(
-                    "\$" + (int.parse(widget.price) * quantity).toString(),
-                    style: TextStyle(
-                      fontSize: 40,
-                      color: Color(0xFF484A4E),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-              buildAddToCart()
-            ],
-          ),
+          buildPrice(),
           Padding(
             padding: EdgeInsets.all(16),
             child: Text(
@@ -154,13 +134,23 @@ class _BurgerState extends State<Burger> {
             ),
           ),
           Container(
-            height: 225,
+            height: 230,
             width: MediaQuery.of(context).size.width,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                buildList("assets/food/donut.png", "Crazy Donut", "12"),
-                //_buildList(),
+                Column(
+                  children: [
+                    buildList("assets/food/donut.png", "Crazy Donut    ", "5"),
+                    buildList("assets/food/popcorn.png", "Crazy Popcorn", "3"),
+                  ],
+                ),
+                Column(
+                  children: [
+                    buildList("assets/food/cheeseburgers.png", "Crazy Cheeseburger", "15"),
+                    buildList("assets/food/pizza.png", "Crazy Pizza               ", "8"),
+                  ],
+                )
               ],
             ),
           )
@@ -169,68 +159,90 @@ class _BurgerState extends State<Burger> {
     );
   }
 
-  
+  Row buildPrice() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          height: 70,
+          width: 120,
+          color: Colors.white,
+          child: Center(
+            child: Text(
+              "\$" + (int.parse(widget.price) * quantity).toString(),
+              style: TextStyle(
+                fontSize: 40,
+                color: Color(0xFF484A4E),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+        buildAddToCart()
+      ],
+    );
+  }
 
   buildAddToCart() {
     return Container(
-              height: 60,
-              width: 225,
-              decoration: BoxDecoration(
-                  color: Color(0xFFF56953),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  )),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    height: 40,
-                    width: 110,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              addQuantity("REMOVE");
-                            },
-                            icon: Icon(
-                              Icons.remove,
-                              color: Color(0xFFF56953),
-                            )),
-                        Text(
-                          netPrice.toString(),
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xFFF56953),
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              addQuantity("ADD");
-                            },
-                            icon: Icon(
-                              Icons.add,
-                              color: Color(0xFFF56953),
-                            )),
-                      ],
-                    ),
+      height: 60,
+      width: 225,
+      decoration: BoxDecoration(
+          color: Color(0xFFF56953),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+          )),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            height: 40,
+            width: 110,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+            ),
+            child: Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      addQuantity("REMOVE");
+                    },
+                    icon: Icon(
+                      Icons.remove,
+                      color: Color(0xFFF56953),
+                    )),
+                Text(
+                  netPrice.toString(),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFFF56953),
+                    fontWeight: FontWeight.w400,
                   ),
-                  Text(
-                    "Add to cart",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-            );
+                ),
+                IconButton(
+                    onPressed: () {
+                      addQuantity("ADD");
+                    },
+                    icon: Icon(
+                      Icons.add,
+                      color: Color(0xFFF56953),
+                    )),
+              ],
+            ),
+          ),
+          Text(
+            "Add to cart",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   addQuantity(pressed) {
@@ -249,6 +261,4 @@ class _BurgerState extends State<Burger> {
         return;
     }
   }
-
-  
 }
