@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import 'elements/featured.dart';
+import 'elements/like_return.dart';
+
 class Burger extends StatefulWidget {
   final imagePath, foodName, price, heroTag;
 
@@ -115,47 +118,7 @@ class _BurgerState extends State<Burger> {
                 ),
               ),
               SizedBox(width: 15),
-              Column(
-                children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(1, 3),
-                            blurRadius: 4,
-                            color: Color(0xFFF56953).withOpacity(0.2),
-                          ),
-                        ],
-                        color: Color(0xFFFFFFFF)),
-                    child: Icon(
-                      Icons.favorite_border_outlined,
-                      color: Color(0xFFF56953),
-                    ),
-                  ),
-                  SizedBox(height: 40),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(1, 3),
-                            blurRadius: 4,
-                            color: Color(0xFFF56953).withOpacity(0.2),
-                          ),
-                        ],
-                        color: Color(0xFFFFFFFF)),
-                    child: Icon(
-                      Icons.restore,
-                      color: Color(0xFFF56953),
-                    ),
-                  ),
-                ],
-              )
+              buildLikeandReturn()
             ],
           ),
           SizedBox(height: 10),
@@ -177,65 +140,7 @@ class _BurgerState extends State<Burger> {
                   ),
                 ),
               ),
-              Container(
-                height: 60,
-                width: 225,
-                decoration: BoxDecoration(
-                    color: Color(0xFFF56953),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                    )),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 110,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                addQuantity("REMOVE");
-                              },
-                              icon: Icon(
-                                Icons.remove,
-                                color: Color(0xFFF56953),
-                              )),
-                          Text(
-                            netPrice.toString(),
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFFF56953),
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                addQuantity("ADD");
-                              },
-                              icon: Icon(
-                                Icons.add,
-                                color: Color(0xFFF56953),
-                              )),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      "Add to cart",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              )
+              buildAddToCart()
             ],
           ),
           Padding(
@@ -254,14 +159,78 @@ class _BurgerState extends State<Burger> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                _buildList("1"),
-                _buildList("1"),
+                buildList("assets/food/donut.png", "Crazy Donut", "12"),
+                //_buildList(),
               ],
             ),
           )
         ],
       ),
     );
+  }
+
+  
+
+  buildAddToCart() {
+    return Container(
+              height: 60,
+              width: 225,
+              decoration: BoxDecoration(
+                  color: Color(0xFFF56953),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  )),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    height: 40,
+                    width: 110,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              addQuantity("REMOVE");
+                            },
+                            icon: Icon(
+                              Icons.remove,
+                              color: Color(0xFFF56953),
+                            )),
+                        Text(
+                          netPrice.toString(),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFFF56953),
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              addQuantity("ADD");
+                            },
+                            icon: Icon(
+                              Icons.add,
+                              color: Color(0xFFF56953),
+                            )),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    "Add to cart",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            );
   }
 
   addQuantity(pressed) {
@@ -281,18 +250,5 @@ class _BurgerState extends State<Burger> {
     }
   }
 
-  _buildList(String columnNumber) {
-    return Padding(
-      padding: EdgeInsets.all(15),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              
-            ],
-          )
-        ],
-      ),
-    );
-  }
+  
 }
