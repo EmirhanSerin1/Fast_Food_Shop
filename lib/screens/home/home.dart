@@ -1,4 +1,5 @@
 import 'package:fast_food_shop/foodTabs/food_tabs.dart';
+import 'package:fast_food_shop/screens/drawer/drawer.dart';
 import 'package:flutter/material.dart';
 
 import 'elements/appbar_custom.dart';
@@ -24,9 +25,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawerr(),
       body: ListView(
         children: [
-          buildCustomAppbar(),
+          buildCustomAppbar(context),
           buildText("SEARCH FOR", 26, FontWeight.w700),
           buildText("RECIPES", 26, FontWeight.w700),
           SizedBox(height: 20),
@@ -52,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               tabs: [
                 Tab(child: Text("FEATURED")),
                 Tab(child: Text("COMBO")),
-                Tab(child: Text("FAVORİTES")),
+                Tab(child: Text("FAVORITES")),
                 Tab(child: Text("RECOMMENDED")),
               ],
             ),
@@ -84,18 +86,17 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             'Hamburger',
             "assets/food/hamburger.png",
             '13',
-            Color(0xFFF5EEB2),
-            Color(0xFF948D51),
+            Color(0xFFB2F5C8),
+            Color(0xFF649451),
             context,
           ),
           buildFoods(
             'Pizza',
             "assets/food/pizza.png",
             '8',
-            Color(0xFFB2F5C8),
-            Color(0xFF649451),
+            Color(0xFFF5EEB2),
+            Color(0xFF948D51),
             context,
-
           ),
           buildFoods(
             'French Fries',
@@ -104,7 +105,6 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             Color(0xFFB2CAF5),
             Color(0xFF515D94),
             context,
-
           ),
         ],
       ),
