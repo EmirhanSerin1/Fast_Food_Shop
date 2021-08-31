@@ -1,4 +1,4 @@
-import 'package:fast_food_shop/screens/burger/burger.dart';
+import 'package:fast_food_shop/screens/food_screen/selected_foods.dart';
 import 'package:flutter/material.dart';
 
 buildFoods(String foodName, String imagePath, String price, Color color, Color textColor, BuildContext context) {
@@ -8,7 +8,7 @@ buildFoods(String foodName, String imagePath, String price, Color color, Color t
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => Burger(
+            builder: (context) => SellectedFood(
               foodName: foodName,
               price: price,
               imagePath: imagePath,

@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'elements/featured.dart';
 import 'elements/like_return.dart';
 
-class Burger extends StatefulWidget {
+class SellectedFood extends StatefulWidget {
   final imagePath, foodName, price, heroTag;
 
-  Burger({this.imagePath, this.foodName, this.heroTag, this.price});
+  SellectedFood({this.imagePath, this.foodName, this.heroTag, this.price});
 
   @override
-  _BurgerState createState() => _BurgerState();
+  _SellectedFoodState createState() => _SellectedFoodState();
 }
 
-class _BurgerState extends State<Burger> {
+class _SellectedFoodState extends State<SellectedFood> {
   var netPrice = 0;
   var quantity = 1;
 
@@ -28,7 +28,14 @@ class _BurgerState extends State<Burger> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.menu, color: Colors.black),
+                IconButton(
+                  splashRadius: 30,
+                  splashColor: Color(0xFFF56953).withOpacity(0.2),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.arrow_back, color: Colors.black),
+                ),
                 Stack(
                   children: [
                     Container(

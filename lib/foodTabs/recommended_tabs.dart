@@ -4,21 +4,21 @@ import 'package:fast_food_shop/screens/food_screen/selected_foods.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-class FoodTab extends StatefulWidget {
-  const FoodTab({Key key}) : super(key: key);
+class RecommendedTabs extends StatefulWidget {
+  const RecommendedTabs({Key key}) : super(key: key);
 
   @override
-  _FoodTabState createState() => _FoodTabState();
+  _RecommendedTabsState createState() => _RecommendedTabsState();
 }
 
-class _FoodTabState extends State<FoodTab> {
+class _RecommendedTabsState extends State<RecommendedTabs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         children: [
-          _buildListItem("Crazy Hot Dog", 4, "6", "8", "assets/food/hotdog.png"),
-          _buildListItem("Crazy Popcorn", 3, "3", "6", "assets/food/popcorn.png"),
+          _buildListItem("Crazy Hambutger", 5, "13", "15", "assets/food/hamburger.png"),
+          _buildListItem("Crazy Cheeseburgers", 5, "15", "18", "assets/food/cheeseburgers.png"),
         ],
       ),
     );

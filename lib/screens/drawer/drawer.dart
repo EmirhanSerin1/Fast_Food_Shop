@@ -13,9 +13,11 @@ class Drawerr extends StatelessWidget {
             //SizedBox(height: 50),
             buildMenuItem("My Account", Icons.account_circle),
             buildMenuItem("My Orders", Icons.inventory_outlined),
+            buildMenuItem("Shopping Cart", Icons.shopping_cart_outlined),
             buildMenuItem("My Favorites", Icons.favorite_border_outlined),
             buildMenuItem("Messages", Icons.mail),
             Divider(),
+            buildMenuItem("Settings", Icons.settings),
           ],
         ),
       ),
@@ -78,14 +80,13 @@ class Drawerr extends StatelessWidget {
 
   buildMenuItem(String text, IconData icon) {
     final color = Color(0xFFF3F3F3);
-    final hColor = Colors.white70;
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: InkWell(
         child: Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Color(0xFFD87C7C), boxShadow: [
+          padding: EdgeInsets.fromLTRB(8, 12, 8, 12),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Color(0xFFDA4646), boxShadow: [
             BoxShadow(
               blurRadius: 3,
               color: Colors.black.withOpacity(0.3),
