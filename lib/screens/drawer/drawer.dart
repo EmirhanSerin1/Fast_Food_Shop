@@ -1,3 +1,4 @@
+import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_account.dart';
 import 'package:flutter/material.dart';
 
 class Drawerr extends StatelessWidget {
@@ -11,13 +12,13 @@ class Drawerr extends StatelessWidget {
           children: [
             buildTop(),
             //SizedBox(height: 50),
-            buildMenuItem("My Account", Icons.account_circle),
-            buildMenuItem("My Orders", Icons.inventory_outlined),
-            buildMenuItem("Shopping Cart", Icons.shopping_cart_outlined),
-            buildMenuItem("My Favorites", Icons.favorite_border_outlined),
-            buildMenuItem("Messages", Icons.mail),
+            buildMenuItem("My Account", Icons.account_circle, Profile(), context),
+            //buildMenuItem("My Orders", Icons.inventory_outlined, ),
+            //buildMenuItem("Shopping Cart", Icons.shopping_cart_outlined),
+            //buildMenuItem("My Favorites", Icons.favorite_border_outlined),
+            //buildMenuItem("Messages", Icons.mail),
             Divider(),
-            buildMenuItem("Settings", Icons.settings),
+            //buildMenuItem("Settings", Icons.settings),
           ],
         ),
       ),
@@ -78,12 +79,15 @@ class Drawerr extends StatelessWidget {
     );
   }
 
-  buildMenuItem(String text, IconData icon) {
+  buildMenuItem(String text, IconData icon, Widget widget, BuildContext context) {
     final color = Color(0xFFF3F3F3);
 
     return Padding(
       padding: const EdgeInsets.all(8),
       child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => widget));
+        },
         child: Container(
           padding: EdgeInsets.fromLTRB(8, 12, 8, 12),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Color(0xFFDA4646), boxShadow: [
