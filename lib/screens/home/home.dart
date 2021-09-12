@@ -1,7 +1,8 @@
-import 'package:fast_food_shop/foodTabs/cheapest_tabs.dart';
-import 'package:fast_food_shop/foodTabs/favorites_tabs.dart';
-import 'package:fast_food_shop/foodTabs/food_tabs.dart';
-import 'package:fast_food_shop/foodTabs/recommended_tabs.dart';
+
+import 'package:fast_food_shop/core/foodTabs/cheapest_tabs.dart';
+import 'package:fast_food_shop/core/foodTabs/favorites_tabs.dart';
+import 'package:fast_food_shop/core/foodTabs/food_tabs.dart';
+import 'package:fast_food_shop/core/foodTabs/recommended_tabs.dart';
 import 'package:fast_food_shop/screens/drawer/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

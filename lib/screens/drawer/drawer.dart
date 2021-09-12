@@ -1,3 +1,4 @@
+import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
 import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_account.dart';
 import 'package:flutter/material.dart';
 
@@ -35,26 +36,7 @@ class Drawerr extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 75,
-                    width: 75,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFDBF0FF),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 5,
-                          spreadRadius: 3,
-                          color: Colors.grey.withOpacity(0.5),
-                          offset: Offset(0, 3),
-                        )
-                      ],
-                      image: DecorationImage(
-                        image: AssetImage("assets/user/person.png"),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
+                  child: buildProfilPhoto(75, 75),
                 ),
                 SizedBox(width: 10),
                 Column(
