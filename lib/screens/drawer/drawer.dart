@@ -1,3 +1,4 @@
+
 import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
 import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_account.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class Drawerr extends StatelessWidget {
       child: Container(
         child: ListView(
           children: [
-            buildTop(),
+            buildTop(context),
             //SizedBox(height: 50),
             buildMenuItem("My Account", Icons.account_circle, Profile(), context),
             //buildMenuItem("My Orders", Icons.inventory_outlined, ),
@@ -26,7 +27,7 @@ class Drawerr extends StatelessWidget {
     );
   }
 
-  buildTop() {
+  buildTop(BuildContext context) {
     return InkWell(
       onTap: () {},
       child: Column(
@@ -36,7 +37,7 @@ class Drawerr extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: buildProfilPhoto(75, 75),
+                  child: buildProfilPhoto(75, 75, Profile(), context),
                 ),
                 SizedBox(width: 10),
                 Column(

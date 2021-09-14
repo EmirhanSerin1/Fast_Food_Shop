@@ -1,4 +1,5 @@
 import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
+import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_account.dart';
 import 'package:flutter/material.dart';
 
 buildCustomAppbar(BuildContext context) {
@@ -16,7 +17,7 @@ buildCustomAppbar(BuildContext context) {
                     color: Colors.black,
                   ),
                 )),
-        buildProfilPhoto(50, 50)
+        buildProfilPhoto(50, 50, Profile(), context),
       ],
     ),
   );
