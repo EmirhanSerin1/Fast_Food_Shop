@@ -1,5 +1,5 @@
 import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
-import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_account.dart';
+import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_account/my_account.dart';
 import 'package:flutter/material.dart';
 
 buildCustomAppbar(BuildContext context) {

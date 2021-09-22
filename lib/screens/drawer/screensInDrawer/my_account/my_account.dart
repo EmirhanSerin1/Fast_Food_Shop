@@ -1,4 +1,3 @@
-import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -41,7 +40,7 @@ class _ProfileState extends State<Profile> {
               height: 450,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: Color(0xFFDBF0FF),
+                color: Color(0xFFE5F0F8),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
@@ -52,13 +51,47 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(padding: EdgeInsets.all(8)),
+                  buildButton("Account Info"),
+                  buildButton("Address"),
+                  buildButton("Favorites"),
+                  //TODO will write
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  buildButton(String text, {Widget widget}) {
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: InkWell(
+        onTap: () {},
+        child: Container(
+          height: 50,
+          width: double.infinity,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.white, boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 3,
+              blurRadius: 3,
+              offset: Offset(0, 3),
+            )
+          ]),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.black.withOpacity(0.7),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
