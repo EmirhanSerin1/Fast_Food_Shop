@@ -16,7 +16,7 @@ class SellectedFood extends StatefulWidget {
 
 class _SellectedFoodState extends State<SellectedFood> {
   var netPrice = 0;
-  var quantity = 1;
+  var quantity = 0;
 
   @override
   Widget build(BuildContext context) {

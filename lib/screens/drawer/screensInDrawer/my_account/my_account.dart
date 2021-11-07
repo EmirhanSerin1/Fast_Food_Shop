@@ -55,7 +55,7 @@ class _ProfileState extends State<Profile> {
                 child: Container(
                   padding: EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: Color(0xFFE5F0F8).withOpacity(0.833),
+                    color: Color(0xFFE5F0F8).withOpacity(0.3),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
