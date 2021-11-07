@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'elements/featured.dart';
 import 'elements/like_return.dart';
 
-
-
 class SellectedFood extends StatefulWidget {
   final imagePath, foodName, price, heroTag;
 
@@ -259,12 +257,14 @@ class _SellectedFoodState extends State<SellectedFood> {
       case "ADD":
         setState(() {
           quantity += 1;
+          netPrice += 1;
         });
         return;
       case "REMOVE":
         setState(() {
           if (quantity != 0) {
             quantity -= 1;
+            netPrice -= 1;
           }
         });
         return;

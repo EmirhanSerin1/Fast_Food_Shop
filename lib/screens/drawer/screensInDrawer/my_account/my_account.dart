@@ -1,3 +1,4 @@
+import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -13,25 +14,57 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: ListView(
         children: [
-          Container(
-            height: 130,
-            width: 130,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  blurRadius: 5,
-                  spreadRadius: 3,
-                  offset: Offset(0, 3),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage())),
+                  child: Container(
+                    child: Icon(Icons.arrow_back),
+                  ),
                 ),
-              ],
-              color: Color(0xFFDBF0FF),
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage("assets/user/person.png"),
-                fit: BoxFit.contain,
               ),
-            ),
+              SizedBox(),
+            ],
+          ),
+          Column(
+            children: [
+              Container(
+                height: 130,
+                width: 130,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      blurRadius: 5,
+                      spreadRadius: 3,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                  color: Color(0xFFDBF0FF),
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage("assets/user/person.png"),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFE5F0F8).withOpacity(0.833),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    "My Name",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -56,7 +89,9 @@ class _ProfileState extends State<Profile> {
                   buildButton("Account Info"),
                   buildButton("Address"),
                   buildButton("Favorites"),
-                  //TODO will write
+                  buildButton("Favorites"),
+                  buildButton("Favorites"),
+                  buildButton("Favorites"),
                 ],
               ),
             ),
