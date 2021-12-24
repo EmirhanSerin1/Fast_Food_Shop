@@ -91,6 +91,7 @@ class _ProfileState extends State<Profile> {
                   buildButton("Favorites"),
                   buildButton("Security"),
                   buildButton("Privacy"),
+                  buildButton("Privacy"),
                 ],
               ),
             ),
