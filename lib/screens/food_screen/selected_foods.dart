@@ -252,7 +252,7 @@ class _SellectedFoodState extends State<SellectedFood> {
     );
   }
 
-  addQuantity(pressed) {
+  addQuantity(pressed){
     switch (pressed) {
       case "ADD":
         setState(() {
