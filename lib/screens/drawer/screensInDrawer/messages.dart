@@ -24,11 +24,12 @@ class _MessagesState extends State<Messages> {
           ),
           buildMessageBox("", "Alessadra Omeliove"),
           buildMessageBox("", "Chris Toc"),
+          buildMessageBox("", "Carolina"),
+          buildMessageBox("", "Emily"),
+          buildMessageBox("", "Magda"),
           buildMessageBox("", "Angelina Tear"),
           buildMessageBox("", "Angelina Tear"),
-          buildMessageBox("", "Angelina Tear"),
-          buildMessageBox("", "Angelina Tear"),
-          buildMessageBox("", "Angelina Tear"),
+          
         ],
       ),
     );
