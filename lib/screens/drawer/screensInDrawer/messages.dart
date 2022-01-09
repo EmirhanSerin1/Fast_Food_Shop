@@ -22,14 +22,14 @@ class _MessagesState extends State<Messages> {
               ),
             ],
           ),
-          buildMessageBox("", "Alessadra Omeliove"),
-          buildMessageBox("", "Chris Toc"),
-          buildMessageBox("", "Carolina"),
-          buildMessageBox("", "Emily"),
-          buildMessageBox("", "Magda"),
-          buildMessageBox("", "Angelina Tear"),
-          buildMessageBox("", "Angelina Tear"),
-          
+          buildMessageBox("assets/user/avatar2.png", "Alessadra Omeliove"),
+          /*buildMessageBox("assets/user/avatar1.png", "Chris Toc"),
+          buildMessageBox("assets/user/avatar4.png", "Carolina Christofer"),
+          buildMessageBox("assets/user/avatar5.png", "Emily Einstan"),
+          buildMessageBox("assets/user/avatar7.png", "Magda Ture"),
+          buildMessageBox("assets/user/avatar3.png", "Mustafa Mohammed"),
+          buildMessageBox("assets/user/avatar10.png", "Angelina Tear"),
+          */
         ],
       ),
     );
@@ -62,6 +62,7 @@ class _MessagesState extends State<Messages> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
+                      image: DecorationImage(image: AssetImage(imagePath), fit: BoxFit.cover),
                     ),
                   ),
                 ),
