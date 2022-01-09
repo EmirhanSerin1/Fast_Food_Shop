@@ -205,7 +205,7 @@ class _SellectedFoodState extends State<SellectedFood> {
         children: [
           Container(
             height: 40,
-            width: 110,
+            width: 120,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,

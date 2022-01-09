@@ -1,6 +1,5 @@
 
 import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
-import 'package:fast_food_shop/screens/drawer/screensInDrawer/messages.dart';
 import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_account/my_account.dart';
 import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_favorites.dart';
 import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_orders.dart';
@@ -22,7 +21,7 @@ class Drawerr extends StatelessWidget {
             buildMenuItem("My Orders", Icons.inventory_outlined, MyOrders(), context ),
             buildMenuItem("Shopping Cart", Icons.shopping_cart_outlined, ShoppingCard(), context),
             buildMenuItem("My Favorites", Icons.favorite_border_outlined, Favorites(), context),
-            buildMenuItem("Messages", Icons.mail, Messages(), context),
+            //buildMenuItem("Messages", Icons.mail, Messages(), context),
             Divider(),
             //buildMenuItem("Settings", Icons.settings),
           ],
