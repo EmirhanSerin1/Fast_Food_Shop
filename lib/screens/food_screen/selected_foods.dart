@@ -1,12 +1,16 @@
 import 'dart:ui';
 
+import 'package:fast_food_shop/core/controller/add_to_cart_controller.dart';
+import 'package:fast_food_shop/provider/market_cart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'elements/featured.dart';
 import 'elements/like_return.dart';
 
 class SellectedFood extends StatefulWidget {
   final imagePath, foodName, price, heroTag;
+  final AddToCartController controller = Get.put(AddToCartController());  
 
   SellectedFood({this.imagePath, this.foodName, this.heroTag, this.price});
 
@@ -15,8 +19,7 @@ class SellectedFood extends StatefulWidget {
 }
 
 class _SellectedFoodState extends State<SellectedFood> {
-  var netPrice = 0;
-  var quantity = 0;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -43,25 +46,28 @@ class _SellectedFoodState extends State<SellectedFood> {
                       width: 45,
                       color: Colors.transparent,
                     ),
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0xFFF56953).withOpacity(0.35),
-                            blurRadius: 6,
-                            spreadRadius: 4,
-                            offset: Offset(1, 4),
+                    InkWell(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShopCart())),
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xFFF56953).withOpacity(0.35),
+                              blurRadius: 6,
+                              spreadRadius: 4,
+                              offset: Offset(1, 4),
+                            ),
+                          ],
+                          color: Color(0xFFF56953),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.shopping_cart_outlined,
+                            color: Colors.white,
                           ),
-                        ],
-                        color: Color(0xFFF56953),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -176,7 +182,7 @@ class _SellectedFoodState extends State<SellectedFood> {
           color: Colors.white,
           child: Center(
             child: Text(
-              "\$" + (int.parse(widget.price) * quantity).toString(),
+              "\$" + (int.parse(widget.price) * widget.controller.quantity.value).toString(),
               style: TextStyle(
                 fontSize: 40,
                 color: Color(0xFF484A4E),
@@ -214,23 +220,20 @@ class _SellectedFoodState extends State<SellectedFood> {
               children: [
                 IconButton(
                     onPressed: () {
-                      addQuantity("REMOVE");
+                      widget.controller.addQuantity("REMOVE");
                     },
                     icon: Icon(
                       Icons.remove,
                       color: Color(0xFFF56953),
                     )),
-                Text(
-                  netPrice.toString(),
-                  style: TextStyle(
+                Obx(()=> Text("${widget.controller.toString()}",style: TextStyle(
                     fontSize: 14,
                     color: Color(0xFFF56953),
                     fontWeight: FontWeight.w400,
-                  ),
-                ),
+                  ),),),
                 IconButton(
                     onPressed: () {
-                      addQuantity("ADD");
+                      widget.controller.addQuantity("ADD");
                     },
                     icon: Icon(
                       Icons.add,
@@ -252,22 +255,6 @@ class _SellectedFoodState extends State<SellectedFood> {
     );
   }
 
-  addQuantity(pressed){
-    switch (pressed) {
-      case "ADD":
-        setState(() {
-          quantity += 1;
-          netPrice += 1;
-        });
-        return;
-      case "REMOVE":
-        setState(() {
-          if (quantity != 0) {
-            quantity -= 1;
-            netPrice -= 1;
-          }
-        });
-        return;
-    }
+  
   }
-}
+
