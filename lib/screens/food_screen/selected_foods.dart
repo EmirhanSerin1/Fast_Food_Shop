@@ -148,14 +148,14 @@ class _SellectedFoodState extends State<SellectedFood> {
               children: [
                 Column(
                   children: [
-                    buildList("assets/food/donut.png", "Crazy Donut    ", "5"),
-                    buildList("assets/food/popcorn.png", "Crazy Popcorn", "3"),
+                    buildList("assets/food/donut.png", "Crazy Donut    ", "5", context),
+                    buildList("assets/food/popcorn.png", "Crazy Popcorn", "3", context),
                   ],
                 ),
                 Column(
                   children: [
-                    buildList("assets/food/cheeseburgers.png", "Crazy Cheeseburger", "15"),
-                    buildList("assets/food/pizza.png", "Crazy Pizza               ", "8"),
+                    buildList("assets/food/cheeseburgers.png", "Crazy Cheeseburger", "15", context),
+                    buildList("assets/food/pizza.png", "Crazy Pizza               ", "8", context),
                   ],
                 )
               ],

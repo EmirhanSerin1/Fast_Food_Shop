@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-buildList(String imagePath, String foodName, String price) {
+import '../selected_foods.dart';
+
+buildList(String imagePath, String foodName, String price, BuildContext context) {
   return Padding(
     padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
     child: Column(
@@ -15,18 +17,32 @@ buildList(String imagePath, String foodName, String price) {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        height: 75,
-                        width: 75,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: Color(0xFFFFE3DF),
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            imagePath,
-                            height: 70,
-                            width: 70,
+                      InkWell(
+                        onTap:() {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => SellectedFood(
+              foodName: foodName,
+              price: price,
+              imagePath: imagePath,
+              heroTag: foodName,
+            ),
+          ),
+        );
+      },
+                        child: Container(
+                          height: 75,
+                          width: 75,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: Color(0xFFFFE3DF),
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              imagePath,
+                              height: 70,
+                              width: 70,
+                            ),
                           ),
                         ),
                       ),
