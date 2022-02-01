@@ -1,16 +1,11 @@
-import 'dart:ui';
 
-import 'package:fast_food_shop/core/controller/add_to_cart_controller.dart';
-import 'package:fast_food_shop/provider/market_cart.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'elements/featured.dart';
 import 'elements/like_return.dart';
 
 class SellectedFood extends StatefulWidget {
   final imagePath, foodName, price, heroTag;
-  final AddToCartController controller = Get.put(AddToCartController());  
 
   SellectedFood({this.imagePath, this.foodName, this.heroTag, this.price});
 
@@ -20,6 +15,8 @@ class SellectedFood extends StatefulWidget {
 
 class _SellectedFoodState extends State<SellectedFood> {
   
+  var quantity = 1;
+  var netPrice = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +44,8 @@ class _SellectedFoodState extends State<SellectedFood> {
                       color: Colors.transparent,
                     ),
                     InkWell(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShopCart())),
+                    
+                      //!onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShopCart())),
                       child: Container(
                         height: 40,
                         width: 40,
@@ -181,15 +179,11 @@ class _SellectedFoodState extends State<SellectedFood> {
           width: 120,
           color: Colors.white,
           child: Center(
-            child: Text(
-              "\$" + (int.parse(widget.price) * widget.controller.quantity.value).toString(),
-              style: TextStyle(
+            child: Text("\$" + (int.parse(widget.price) *quantity).toString(),style: TextStyle(
                 fontSize: 40,
                 color: Color(0xFF484A4E),
                 fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+              ),),)
         ),
         buildAddToCart()
       ],
@@ -220,20 +214,20 @@ class _SellectedFoodState extends State<SellectedFood> {
               children: [
                 IconButton(
                     onPressed: () {
-                      widget.controller.addQuantity("REMOVE");
+                      addQuantity("REMOVE");
                     },
                     icon: Icon(
                       Icons.remove,
                       color: Color(0xFFF56953),
                     )),
-                Obx(()=> Text("${widget.controller.toString()}",style: TextStyle(
+                Text(quantity.toString(), style: TextStyle(
                     fontSize: 14,
                     color: Color(0xFFF56953),
                     fontWeight: FontWeight.w400,
-                  ),),),
+                  ),),
                 IconButton(
                     onPressed: () {
-                      widget.controller.addQuantity("ADD");
+                      addQuantity("ADD");
                     },
                     icon: Icon(
                       Icons.add,
@@ -255,6 +249,25 @@ class _SellectedFoodState extends State<SellectedFood> {
     );
   }
 
+addQuantity(pressed){
+    switch (pressed) {
+      case "ADD":
+        setState(() {
+          quantity++;
+        netPrice++;
+        });
+        return;
+      case "REMOVE":
+          if (quantity > 0) {
+            setState(() {
+              quantity -= 1;
+            netPrice -= 1;
+            });
+          }
+        
+        return;
+    }
+}
   
   }
 
