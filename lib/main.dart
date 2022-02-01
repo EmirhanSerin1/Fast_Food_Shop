@@ -1,5 +1,7 @@
+import 'package:fast_food_shop/models/Cart/provider/cart_provider.dart';
 import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,13 +10,17 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Fast_Food_Shop',
-      theme: ThemeData(
+    return ChangeNotifierProvider(
+      create: (_) => CartProvider(),
+      child: Builder(builder: (BuildContext context){
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Fast_Food_Shop',
+        theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
     );
+      }),);
   }
 }

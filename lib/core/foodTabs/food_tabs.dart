@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class FoodTab extends StatefulWidget {
-  const FoodTab({Key key}) : super(key: key);
+  const FoodTab({Key? key}) : super(key: key);
 
   @override
   _FoodTabState createState() => _FoodTabState();

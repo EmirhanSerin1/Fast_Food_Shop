@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class FavoritesTabs extends StatefulWidget {
-  const FavoritesTabs({Key key}) : super(key: key);
+  const FavoritesTabs({Key? key}) : super(key: key);
 
   @override
   _FavoritesTabsState createState() => _FavoritesTabsState();

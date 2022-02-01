@@ -2,7 +2,7 @@ import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key key}) : super(key: key);
+  const Profile({Key? key}) : super(key: key);
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -100,7 +100,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  buildButton(String text, {Widget widget}) {
+  buildButton(String text, {Widget? widget}) {
     return Padding(
       padding: EdgeInsets.all(8),
       child: InkWell(
