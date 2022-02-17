@@ -1,5 +1,9 @@
 
+import 'package:fast_food_shop/models/Cart/model/cart_model.dart';
+import 'package:fast_food_shop/models/Cart/service/cart_service.dart';
+import 'package:fast_food_shop/provider/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'elements/featured.dart';
 import 'elements/like_return.dart';
@@ -15,11 +19,14 @@ class SellectedFood extends StatefulWidget {
 
 class _SellectedFoodState extends State<SellectedFood> {
   
+  DBHelper dbHelper = DBHelper();
+
   var quantity = 1;
   var netPrice = 1;
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context);
     return Scaffold(
       body: ListView(
         children: [
@@ -44,8 +51,12 @@ class _SellectedFoodState extends State<SellectedFood> {
                       color: Colors.transparent,
                     ),
                     InkWell(
-                    
-                      //!onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShopCart())),
+                     /*
+                      onTap: (){
+                        dbHelper!.insert(
+                          Cart(id: index, productId: index.toString(), productName: productName, productPrice: productPrice, initialPrice: initialPrice, quantity: quantity, unitTag: unitTag, imagePath: imagePath)
+                        );
+                      },*/
                       child: Container(
                         height: 40,
                         width: 40,

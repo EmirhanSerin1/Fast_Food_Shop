@@ -1,4 +1,5 @@
 import 'package:fast_food_shop/models/Cart/provider/cart_provider.dart';
+import 'package:fast_food_shop/screens/authentication/login/login_screen.dart';
 import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: LoginScreen(),
     );
       }),);
   }

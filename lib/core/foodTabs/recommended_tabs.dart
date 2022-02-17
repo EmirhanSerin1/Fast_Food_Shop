@@ -1,8 +1,6 @@
-import 'dart:ui';
-
 import 'package:fast_food_shop/screens/food_screen/selected_foods.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 
 class RecommendedTabs extends StatefulWidget {
   const RecommendedTabs({Key? key}) : super(key: key);
