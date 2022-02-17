@@ -20,7 +20,6 @@ class Drawerr extends StatelessWidget {
             buildMenuItem("My Account", Icons.account_circle, Profile(), context),
             buildMenuItem("My Orders", Icons.inventory_outlined, MyOrders(), context ),
             buildMenuItem("Shopping Cart", Icons.shopping_cart_outlined, ShoppingCard(), context),
-            buildMenuItem("My Favorites", Icons.favorite_border_outlined, Favorites(), context),
             //buildMenuItem("Messages", Icons.mail, Messages(), context),
             Divider(),
             //buildMenuItem("Settings", Icons.settings),
