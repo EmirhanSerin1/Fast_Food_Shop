@@ -1,4 +1,4 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_food_shop/core/foodTabs/cheapest_tabs.dart';
 import 'package:fast_food_shop/core/foodTabs/favorites_tabs.dart';
 import 'package:fast_food_shop/core/foodTabs/food_tabs.dart';
@@ -6,6 +6,7 @@ import 'package:fast_food_shop/core/foodTabs/recommended_tabs.dart';
 import 'package:fast_food_shop/screens/drawer/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'elements/appbar_custom.dart';
 import 'elements/recommended.dart';
@@ -18,7 +19,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
   TabController? tabController;
 
   @override
@@ -43,9 +45,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             SizedBox(height: 20),
             buildSearchBox(),
             SizedBox(height: 20),
-            buildText("Recommended", 18, FontWeight.w500),
+            buildText("Product List", 18, FontWeight.w500),
             SizedBox(height: 15),
-            buildRecommendedsPart(),
+            products(),
             SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.only(left: 15),
@@ -59,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
-                unselectedLabelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                unselectedLabelStyle:
+                    TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                 tabs: [
                   Tab(child: Text("FEATURED")),
                   Tab(child: Text("CHEAPEST")),
@@ -86,40 +89,75 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     );
   }
 
-  Container buildRecommendedsPart() {
+  Container products() {
     return Container(
       height: 200,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          buildFoods(
-            'Hamburger',
-            "assets/food/hamburger.png",
-            '13',
-            Color(0xFFB2F5C8),
-            Color(0xFF649451),
-            context,
-          ),
-          buildFoods(
-            'Pizza',
-            "assets/food/pizza.png",
-            '8',
-            Color(0xFFF5EEB2),
-            Color(0xFF948D51),
-            context,
-          ),
-          buildFoods(
-            'French Fries',
-            "assets/food/frenchfries.png",
-            '5',
-            Color(0xFFB2CAF5),
-            Color(0xFF515D94),
-            context,
-          ),
-        ],
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('products').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: snapshot.data.docs.length,
+            itemBuilder: (context, index) {
+              DocumentSnapshot ds = snapshot.data.docs[index];
+              return buildFoods(
+                ds["name"],
+                ds["image"],
+                ds["price"],
+                Color(0xFFB2F5C8),
+                Color(0xFF649451),
+                context,
+              );
+            },
+          );
+        },
       ),
     );
   }
+
+  // If we wanna create our products inside th codes
+  // we can create like this
+
+  // Container buildProductsPart() {
+  //   return Container(
+  //     height: 200,
+  //     child: ListView(
+  //       scrollDirection: Axis.horizontal,
+  //       children: [
+  //         buildFoods(
+  //           'Hamburger',
+  //           "assets/food/hamburger.png",
+  //           '13',
+  //           Color(0xFFB2F5C8),
+  //           Color(0xFF649451),
+  //           context,
+  //         ),
+  //         buildFoods(
+  //           'Pizza',
+  //           "assets/food/pizza.png",
+  //           '8',
+  //           Color(0xFFF5EEB2),
+  //           Color(0xFF948D51),
+  //           context,
+  //         ),
+  //         buildFoods(
+  //           'French Fries',
+  //           "assets/food/frenchfries.png",
+  //           '5',
+  //           Color(0xFFB2CAF5),
+  //           Color(0xFF515D94),
+  //           context,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Padding buildText(String text, double size, FontWeight weight) {
     return Padding(
