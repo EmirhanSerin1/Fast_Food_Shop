@@ -128,7 +128,7 @@ class _SellectedFoodState extends State<SellectedFood> {
                   width: 200,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                    image: AssetImage(widget.imagePath),
+                    image: NetworkImage(widget.imagePath),
                     fit: BoxFit.contain,
                   )),
                 ),
