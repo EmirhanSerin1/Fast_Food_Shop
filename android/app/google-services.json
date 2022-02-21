@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1058429827342:android:4b15398d25d7f1d9a73f5f",
+        "mobilesdk_app_id": "1:1058429827342:android:75199ef317dea66aa73f5f",
         "android_client_info": {
           "package_name": "com.example.fast_food_shop"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1058429827342-6a0e886ju7qr1e0q8haiqmngu1i60mcf.apps.googleusercontent.com",
+          "client_id": "1058429827342-d661n7ln903ffkekersdlstegtkqeig9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.fast_food_shop",

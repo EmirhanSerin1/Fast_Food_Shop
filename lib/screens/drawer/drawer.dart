@@ -140,35 +140,32 @@ class _DrawerrState extends State<Drawerr> {
   }
 
   buildLogOutButton() {
-    return InkWell(
-      onTap: () {
-        logout(context);
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Color.fromARGB(255, 243, 238, 238),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 3,
-                color: Colors.black.withOpacity(0.3),
-                offset: Offset(3, 3),
-              )
-            ]),
-        height: 50,
-        width: double.infinity,
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Log Out"),
-              ),
-              IconButton(
-                  onPressed: () {}, icon: Icon(Icons.power_settings_new, color: Colors.red,)),
-            ],
-          ),
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Color.fromARGB(255, 243, 238, 238),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 3,
+              color: Colors.black.withOpacity(0.3),
+              offset: Offset(3, 3),
+            )
+          ]),
+      height: 50,
+      width: double.infinity,
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Log Out"),
+            ),
+            IconButton(
+                onPressed: () {
+                  logout(context);
+                }, icon: Icon(Icons.power_settings_new, color: Colors.red,)),
+          ],
         ),
       ),
     );
