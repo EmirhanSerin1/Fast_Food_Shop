@@ -123,44 +123,6 @@ class _MyHomePageState extends State<MyHomePage>
     );
   }
 
-  // If we wanna create our products inside th codes
-  // we can create like this
-
-  // Container buildProductsPart() {
-  //   return Container(
-  //     height: 200,
-  //     child: ListView(
-  //       scrollDirection: Axis.horizontal,
-  //       children: [
-  //         buildFoods(
-  //           'Hamburger',
-  //           "assets/food/hamburger.png",
-  //           '13',
-  //           Color(0xFFB2F5C8),
-  //           Color(0xFF649451),
-  //           context,
-  //         ),
-  //         buildFoods(
-  //           'Pizza',
-  //           "assets/food/pizza.png",
-  //           '8',
-  //           Color(0xFFF5EEB2),
-  //           Color(0xFF948D51),
-  //           context,
-  //         ),
-  //         buildFoods(
-  //           'French Fries',
-  //           "assets/food/frenchfries.png",
-  //           '5',
-  //           Color(0xFFB2CAF5),
-  //           Color(0xFF515D94),
-  //           context,
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Padding buildText(String text, double size, FontWeight weight) {
     return Padding(
       padding: EdgeInsets.only(left: 15),
