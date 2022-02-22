@@ -1,7 +1,8 @@
 import 'package:fast_food_shop/screens/food_screen/selected_foods.dart';
 import 'package:flutter/material.dart';
 
-buildFoods(String foodName, String imagePath, String price, Color color, Color textColor, BuildContext context) {
+buildFoods(String foodName, String imagePath, String price, Color color,
+    Color textColor, BuildContext context) {
   return Padding(
     padding: EdgeInsets.only(left: 15, top: 4, bottom: 8),
     child: InkWell(
@@ -21,17 +22,16 @@ buildFoods(String foodName, String imagePath, String price, Color color, Color t
         height: 174,
         width: 150,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: color,
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(1, 3),
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 2,
-              blurRadius: 2,
-            )
-          ]
-        ),
+            borderRadius: BorderRadius.circular(12),
+            color: color,
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(1, 3),
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 2,
+              )
+            ]),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

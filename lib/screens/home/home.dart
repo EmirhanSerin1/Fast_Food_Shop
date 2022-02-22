@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'elements/appbar_custom.dart';
-import 'elements/recommended.dart';
+import 'elements/products.dart';
 import 'elements/search_box.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -97,25 +97,28 @@ class _MyHomePageState extends State<MyHomePage>
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: Colors.black),
+            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            Fluttertoast.showToast(msg: "loading");
+            return SizedBox();
+          } else {
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data.docs.length,
+              itemBuilder: (context, index) {
+                DocumentSnapshot ds = snapshot.data.docs[index];
+                return buildFoods(
+                  ds["name"],
+                  ds["image"],
+                  ds["price"],
+                  Color(0xFFB2F5C8),
+                  Color(0xFF649451),
+                  context,
+                );
+              },
             );
           }
-
-          return ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: snapshot.data.docs.length,
-            itemBuilder: (context, index) {
-              DocumentSnapshot ds = snapshot.data.docs[index];
-              return buildFoods(
-                ds["name"],
-                ds["image"],
-                ds["price"],
-                Color(0xFFB2F5C8),
-                Color(0xFF649451),
-                context,
-              );
-            },
-          );
         },
       ),
     );

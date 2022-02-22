@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
 import 'package:fast_food_shop/models/user.dart';
@@ -19,6 +21,30 @@ class _DrawerrState extends State<Drawerr> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
+  // full name will come after delay
+  late Timer _timer;
+  Widget fullName = CircularProgressIndicator(
+    strokeWidth: 1,
+  );
+  Widget email = CircularProgressIndicator(
+    strokeWidth: 1,
+  );
+
+  _DrawerrState() {
+    _timer = new Timer(const Duration(milliseconds: 800), () {
+      setState(() {
+        fullName = fullNameAfterDelay;
+        email = emailAfterDelay;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,9 +60,10 @@ class _DrawerrState extends State<Drawerr> {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: SafeArea(
-        child: Container(
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.85,
+      child: Drawer(
+        child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -46,8 +73,8 @@ class _DrawerrState extends State<Drawerr> {
                   //SizedBox(height: 50),
                   buildMenuItem(
                       "My Account", Icons.account_circle, Profile(), context),
-                  buildMenuItem(
-                      "My Orders", Icons.inventory_outlined, MyOrders(), context),
+                  buildMenuItem("My Orders", Icons.inventory_outlined,
+                      MyOrders(), context),
                   buildMenuItem("Shopping Cart", Icons.shopping_cart_outlined,
                       ShoppingCard(), context),
                   //buildMenuItem("Messages", Icons.mail, Messages(), context),
@@ -79,14 +106,8 @@ class _DrawerrState extends State<Drawerr> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "${loggedInUser.firstName} ${loggedInUser.secondName}",
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "${loggedInUser.email}",
-                      style: TextStyle(color: Colors.grey, fontSize: 13),
-                    ),
+                    fullName,
+                    email,
                   ],
                 )
               ],
@@ -164,7 +185,11 @@ class _DrawerrState extends State<Drawerr> {
             IconButton(
                 onPressed: () {
                   logout(context);
-                }, icon: Icon(Icons.power_settings_new, color: Colors.red,)),
+                },
+                icon: Icon(
+                  Icons.power_settings_new,
+                  color: Colors.red,
+                )),
           ],
         ),
       ),
@@ -176,4 +201,20 @@ class _DrawerrState extends State<Drawerr> {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
+
+  get fullNameAfterDelay => SizedBox(
+        width: MediaQuery.of(context).size.width * 0.5,
+        child: Text(
+          "${loggedInUser.firstName} ${loggedInUser.secondName}",
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
+      );
+
+  get emailAfterDelay => SizedBox(
+        width: MediaQuery.of(context).size.width * 0.5,
+        child: Text(
+          "${loggedInUser.email}",
+          style: TextStyle(color: Colors.grey, fontSize: 13),
+        ),
+      );
 }
