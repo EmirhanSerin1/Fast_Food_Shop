@@ -23,12 +23,8 @@ class _DrawerrState extends State<Drawerr> {
 
   // full name will come after delay
   late Timer _timer;
-  Widget fullName = CircularProgressIndicator(
-    strokeWidth: 1,
-  );
-  Widget email = CircularProgressIndicator(
-    strokeWidth: 1,
-  );
+  Widget fullName = CircularProgressIndicator(strokeWidth: 1);
+  Widget email = CircularProgressIndicator(strokeWidth: 1);
 
   _DrawerrState() {
     _timer = new Timer(const Duration(milliseconds: 800), () {
@@ -70,7 +66,6 @@ class _DrawerrState extends State<Drawerr> {
               Column(
                 children: [
                   buildTop(context),
-                  //SizedBox(height: 50),
                   buildMenuItem(
                       "My Account", Icons.account_circle, Profile(), context),
                   buildMenuItem("My Orders", Icons.inventory_outlined,

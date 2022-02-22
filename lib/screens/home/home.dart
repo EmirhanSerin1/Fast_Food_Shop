@@ -108,14 +108,13 @@ class _MyHomePageState extends State<MyHomePage>
               itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index) {
                 DocumentSnapshot ds = snapshot.data.docs[index];
-                return buildFoods(
-                  ds["name"],
-                  ds["image"],
-                  ds["price"],
-                  Color(0xFFB2F5C8),
-                  Color(0xFF649451),
-                  context,
-                );
+                 return ProductList(
+                  foodName: ds["name"], 
+                  imagePath: ds["image"],
+                  price: ds["price"], 
+                  color: Color(0xFFB2F5C8),
+                  textColor: Color(0xFF649451),
+                  );
               },
             );
           }
