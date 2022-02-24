@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_food_shop/models/shooing_cart.dart';
-import 'package:fast_food_shop/providers/set_doc_id.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
 class AddToCard extends StatefulWidget {
   const AddToCard({
@@ -25,6 +23,7 @@ class _AddToCardState extends State<AddToCard> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = _auth.currentUser;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -42,12 +41,12 @@ class _AddToCardState extends State<AddToCard> {
                 ),
               ),
             )),
-        buildAddToCart()
+        buildAddToCart(user)
       ],
     );
   }
 
-  buildAddToCart() {
+  buildAddToCart(User? user) {
     return Container(
       height: 60,
       width: 225,
@@ -96,11 +95,20 @@ class _AddToCardState extends State<AddToCard> {
               ],
             ),
           ),
+          // StreamBuilder(
+          //     stream: FirebaseFirestore.instance
+          //         .collection("users")
+          //         .doc(user?.uid)
+          //         .collection("singleProducts")
+          //         .snapshots(),
+          //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+          //       return productAddMethod(user);
+          //     })
           InkWell(
             onTap: () {
-              sendOrderToFirestore(quantity.toString(),
-                  Provider.of<DocId>(context, listen: false).docId.toString());
-              Provider.of<DocId>(context, listen: false).increaseDocId();
+              //DocumentSnapshot<Map<String, dynamic>> doc = getDoc;
+
+              _sendOrderToFirestore(quantity.toString(), widget.foodName, user);
             },
             child: Text(
               "Add to cart",
@@ -134,13 +142,12 @@ class _AddToCardState extends State<AddToCard> {
     }
   }
 
-  sendOrderToFirestore(String quantity, docId) async {
+  _sendOrderToFirestore(String quantity, docId, User? user) async {
     // calling firestore
     // calling product model
     // sending these values
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
     Cart cart = Cart();
 
     cart.idOfPerson = user!.uid;
@@ -155,10 +162,85 @@ class _AddToCardState extends State<AddToCard> {
         .collection("users")
         .doc(user.uid)
         .collection("singleProducts")
-        .doc(docId.toString())
+        .doc(docId)
         .set(cart.toMap())
-        .then(
-            (value) => Fluttertoast.showToast(msg: "${cart.productName} added"))
+        .then((value) =>
+            Fluttertoast.showToast(msg: "${cart.productName} addeddd"))
         .catchError((error) => Fluttertoast.showToast(msg: "stg went wrong"));
+  }
+
+  _upgradeOrder(String numberOfProduct, docId, User? user, var quantity) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+    var totalProduct = int.parse(numberOfProduct) + quantity;
+    print(
+        quantity.toString() + "......................................QUANTİTY");
+    print(numberOfProduct +
+        "......................................NUMBER OF PRODUCT");
+    print(totalProduct.toString() +
+        "......................................TOTAL PRODUCT");
+    await firebaseFirestore
+        .collection("user")
+        .doc(user?.uid)
+        .collection("singleProducts")
+        .doc(docId)
+        .update({"numberOfProduct": totalProduct.toString()})
+        .then((value) =>
+            Fluttertoast.showToast(msg: "${widget.foodName} addeddddddddddd"))
+        .catchError((error) => Fluttertoast.showToast(msg: "stg went wrong"));
+  }
+
+  productAddMethod(User? user) async {
+    var userDocRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .collection("singleProduct")
+        .doc(widget.foodName)
+        .get();
+    var doc = await userDocRef;
+
+    if (!doc.exists) {
+      return InkWell(
+        onTap: () {
+          _upgradeOrder(
+              doc["numberOfProduct"], widget.foodName, user, quantity);
+        },
+        child: Text(
+          "Add to cart",
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.white,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      );
+    } else {
+      return InkWell(
+        onTap: () {
+          _sendOrderToFirestore(quantity.toString(), widget.foodName, user);
+        },
+        child: Text(
+          "Add to cart",
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.white,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      );
+    }
+  }
+
+  get getDoc async {
+    User? user = _auth.currentUser;
+    var userDocRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .collection("singleProduct")
+        .doc(widget.foodName);
+
+    var doc = await userDocRef.get();
+
+    return doc;
   }
 }

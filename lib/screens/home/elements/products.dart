@@ -72,7 +72,7 @@ class _ProductListState extends State<ProductList> {
               SizedBox(height: 25),
               Text(
                 widget.foodName,
-                style: TextStyle(fontSize: 17, color: widget.textColor),
+                style: TextStyle(fontSize: 17, color: widget.textColor, fontWeight: FontWeight.w500),
               ),
               Text(
                 "\$" + widget.price,

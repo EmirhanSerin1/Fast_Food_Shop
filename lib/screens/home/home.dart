@@ -112,8 +112,8 @@ class _MyHomePageState extends State<MyHomePage>
                   foodName: ds["name"], 
                   imagePath: ds["image"],
                   price: ds["price"], 
-                  color: Color(0xFFB2F5C8),
-                  textColor: Color(0xFF649451),
+                  color: Color(0xFFFD6750),
+                  textColor: Colors.white,
                   );
               },
             );

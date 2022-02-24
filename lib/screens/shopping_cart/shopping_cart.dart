@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fast_food_shop/screens/shopping_cart/elements/cart_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'elements/card_list.dart';
 
 class ShoppingCard extends StatefulWidget {
   ShoppingCard({Key? key}) : super(key: key);
@@ -39,51 +38,12 @@ class _ShoppingCardState extends State<ShoppingCard> {
               itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index) {
                 DocumentSnapshot ds = snapshot.data.docs[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 80,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(1, 3),
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                          )
-                        ]),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Container(
-                            height: 70,
-                            width: 70,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(ds["imagePath"]),
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(8,4,0,4),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(ds["productName"], style: TextStyle(fontSize: 18),),
-                              Text("Total: "+ds["totalProductPrice"]+"\$ " + "${ds["productPrice"]} x ${ds["numberOfProduct"]}"),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                return CartItem(
+                  foodName: ds["productName"],
+                  imagePath: ds["imagePath"],
+                  price: ds["productPrice"],
+                  numberOfProduct: ds["numberOfProduct"],
+                  user: user,
                 );
               },
             );
