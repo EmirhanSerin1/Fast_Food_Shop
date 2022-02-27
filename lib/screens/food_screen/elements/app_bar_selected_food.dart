@@ -3,8 +3,8 @@ import 'package:fast_food_shop/screens/shopping_cart/shopping_cart.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AppBarForSelected extends StatelessWidget {
-  AppBarForSelected({
+class AppBarForSelectedFood extends StatelessWidget {
+  AppBarForSelectedFood({
     Key? key,
 
   }) : super(key: key);

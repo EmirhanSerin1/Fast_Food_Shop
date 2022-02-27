@@ -21,7 +21,7 @@ class _SellectedFoodState extends State<SellectedFood> {
     return Scaffold(
       body: ListView(
         children: [
-          AppBarForSelected(),
+          AppBarForSelectedFood(),
           CustomName(text: "CRAZY"),
           CustomName(text: widget.foodName.toString().toUpperCase()),
           SizedBox(height: 40),
