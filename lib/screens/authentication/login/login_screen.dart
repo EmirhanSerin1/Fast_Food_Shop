@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
         shadowColor: Colors.grey,
         borderRadius: BorderRadius.circular(18),
         child: MaterialButton(
-          minWidth: MediaQuery.of(context).size.width,
+          minWidth: MediaQuery.of(context).size.width/2,
           onPressed: () {
             signIn(emailController.text, passwordController.text);
           },

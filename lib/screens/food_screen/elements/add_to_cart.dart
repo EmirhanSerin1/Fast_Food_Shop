@@ -19,13 +19,12 @@ class AddToCard extends StatefulWidget {
 }
 
 class _AddToCardState extends State<AddToCard> {
-  var quantity = 1;
-
   final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     User? user = _auth.currentUser;
+    final quant = Provider.of<Quantity>(context, listen: true);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -35,7 +34,7 @@ class _AddToCardState extends State<AddToCard> {
             color: Colors.white,
             child: Center(
               child: Text(
-                "\$" + (int.parse(widget.price) * quantity).toString(),
+                "\$" + (int.parse(widget.price) * quant.quantity).toString(),
                 style: TextStyle(
                   fontSize: 40,
                   color: Color(0xFF484A4E),
@@ -43,12 +42,12 @@ class _AddToCardState extends State<AddToCard> {
                 ),
               ),
             )),
-        buildAddToCart(user)
+        buildAddToCart(user, quant)
       ],
     );
   }
 
-  buildAddToCart(User? user) {
+  buildAddToCart(User? user, Quantity quant) {
     return Container(
       height: 60,
       width: 225,
@@ -72,14 +71,15 @@ class _AddToCardState extends State<AddToCard> {
               children: [
                 IconButton(
                     onPressed: () {
-                      addQuantity("REMOVE");
+                      quant.decreaseQuantity();
                     },
                     icon: Icon(
                       Icons.remove,
                       color: Color(0xFFF56953),
                     )),
                 Text(
-                  quantity.toString(),
+                  // quantity.toString(),
+                  quant.quantity.toString(),
                   style: TextStyle(
                     fontSize: 14,
                     color: Color(0xFFF56953),
@@ -88,7 +88,7 @@ class _AddToCardState extends State<AddToCard> {
                 ),
                 IconButton(
                     onPressed: () {
-                      addQuantity("ADD");
+                      quant.increaseQuantity();
                     },
                     icon: Icon(
                       Icons.add,
@@ -106,14 +106,17 @@ class _AddToCardState extends State<AddToCard> {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 return InkWell(
                   onTap: () {
-                    getDoc(user);
+                    getDoc(user, quant);
                   },
-                  child: Text(
-                    "Add to cart",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(4,8,4,8),
+                    child: Text(
+                      "Add to cart",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 );
@@ -123,25 +126,7 @@ class _AddToCardState extends State<AddToCard> {
     );
   }
 
-  addQuantity(pressed) {
-    switch (pressed) {
-      case "ADD":
-        setState(() {
-          quantity++;
-        });
-        return;
-      case "REMOVE":
-        if (quantity > 1) {
-          setState(() {
-            quantity -= 1;
-          });
-        }
-
-        return;
-    }
-  }
-
-  _sendOrderToFirestore(String quantity, docId, User? user) async {
+  _sendOrderToFirestore(Quantity quant, docId, User? user) async {
     // calling firestore
     // calling product model
     // sending these values
@@ -153,9 +138,9 @@ class _AddToCardState extends State<AddToCard> {
     cart.productName = widget.foodName;
     cart.productPrice = widget.price;
     cart.imagePath = widget.imagePath;
-    cart.numberOfProduct = quantity;
+    cart.numberOfProduct = quant.quantity.toString();
     cart.totalProductPrice =
-        (int.parse(widget.price) * int.parse(quantity)).toString();
+        (int.parse(widget.price) * quant.quantity).toString();
 
     await firebaseFirestore
         .collection("users")
@@ -163,16 +148,18 @@ class _AddToCardState extends State<AddToCard> {
         .collection("singleProducts")
         .doc(docId)
         .set(cart.toMap())
-        .then((value) =>
-            Fluttertoast.showToast(msg: "${cart.productName} addeddddddd"))
+        .then(
+            (value) => Fluttertoast.showToast(msg: "${cart.productName} added"))
+        .then((value) => quant.deleteQuantity())
         .catchError((error) => Fluttertoast.showToast(msg: "stg went wrong"));
   }
 
 // We can update our order with this method
-  _upgradeOrder(String numberOfProduct, docId, User? user, var quantity) async {
+  _upgradeOrder(
+      String numberOfProduct, docId, User? user, Quantity quant) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
-    var totalProduct = int.parse(numberOfProduct) + quantity;
+    var totalProduct = int.parse(numberOfProduct) + quant.quantity;
     var totalProductPrice = totalProduct * int.parse(widget.price);
 
     await firebaseFirestore
@@ -186,11 +173,12 @@ class _AddToCardState extends State<AddToCard> {
         })
         .then(
             (value) => Fluttertoast.showToast(msg: "${widget.foodName} update"))
+        .then((value) => quant.deleteQuantity())
         .catchError((error) =>
             Fluttertoast.showToast(msg: "sth went wrong while updating"));
   }
 
-  getDoc(User? user) async {
+  getDoc(User? user, Quantity quant) async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     var docRef = db
         .collection("users")
@@ -202,15 +190,13 @@ class _AddToCardState extends State<AddToCard> {
           if (doc.exists)
             {
               _upgradeOrder(
-                  doc["numberOfProduct"], widget.foodName, user, quantity),
+                  doc["numberOfProduct"], widget.foodName, user, quant),
             }
           else
             {
               // doc.data() will be undefined in this case
-              _sendOrderToFirestore(quantity.toString(), widget.foodName, user),
+              _sendOrderToFirestore(quant, widget.foodName, user),
             }
         });
   }
-
-  
 }

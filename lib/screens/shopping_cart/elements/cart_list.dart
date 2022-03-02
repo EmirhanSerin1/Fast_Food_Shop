@@ -46,8 +46,8 @@ class _CartItemState extends State<CartItem> {
                   blurRadius: 2,
                 )
               ]),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
             children: [
               Row(
                 children: [

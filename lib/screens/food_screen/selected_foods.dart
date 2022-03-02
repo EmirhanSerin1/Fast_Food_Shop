@@ -32,14 +32,14 @@ class _SellectedFoodState extends State<SellectedFood> {
               foodName: widget.foodName,
               imagePath: widget.imagePath,
               price: widget.price),
-          featured(),
-          featuredItems(context),
+          featuredText(),
+          Featured(),
         ],
       ),
     );
   }
 
-  Padding featured() {
+  Padding featuredText() {
     return Padding(
       padding: EdgeInsets.all(16),
       child: Text(

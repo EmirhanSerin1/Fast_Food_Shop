@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Quantity with ChangeNotifier {
-  var _quantity = 0;
+  var _quantity = 1;
 
   get quantity => _quantity;
 
@@ -11,13 +11,14 @@ class Quantity with ChangeNotifier {
   }
 
   decreaseQuantity() {
-    _quantity -= 1;
+    if (quantity > 1) {
+      _quantity -= 1;
+    }
     notifyListeners();
   }
 
   deleteQuantity() {
-    _quantity = 0;
+    _quantity = 1;
     notifyListeners();
   }
-
 }
