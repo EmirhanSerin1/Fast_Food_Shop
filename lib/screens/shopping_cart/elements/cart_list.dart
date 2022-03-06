@@ -86,9 +86,9 @@ class _CartItemState extends State<CartItem> {
                                   quantity--;
                                   var totalPrice =
                                       quantity * int.parse(widget.price);
-                                  decreaseNumberOfProject(
+                                  _decreaseNumberOfProject(
                                       widget.foodName, quantity);
-                                  upgradeTotalPrice(
+                                  _upgradeTotalPrice(
                                       widget.foodName, totalPrice);
                                 },
                               ),
@@ -106,9 +106,9 @@ class _CartItemState extends State<CartItem> {
                                   quantity++;
                                   var totalPrice =
                                       quantity * int.parse(widget.price);
-                                  increaseNumberOfProject(
+                                  _increaseNumberOfProject(
                                       widget.foodName, quantity);
-                                  upgradeTotalPrice(
+                                  _upgradeTotalPrice(
                                       widget.foodName, totalPrice);
                                 },
                               ),
@@ -128,7 +128,8 @@ class _CartItemState extends State<CartItem> {
                   ),
                   IconButton(
                     onPressed: () {
-                      deleteProduct(widget.foodName, widget.user);
+                      _deleteExtras(widget.user);
+                      _deleteProduct(widget.foodName, widget.user);
                     },
                     icon: Icon(Icons.delete_outline),
                   ),
@@ -141,7 +142,7 @@ class _CartItemState extends State<CartItem> {
     );
   }
 
-  Future<void> deleteProduct(var docId, User? user) {
+  Future<void> _deleteProduct(var docId, User? user) {
     CollectionReference product = FirebaseFirestore.instance
         .collection('users')
         .doc(user?.uid)
@@ -153,7 +154,22 @@ class _CartItemState extends State<CartItem> {
         .catchError((error) => Fluttertoast.showToast(msg: error.toString()));
   }
 
-  Future<void> increaseNumberOfProject(var docId, quantity) {
+  Future<void> _deleteExtras( User? user) async {
+    var collection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .collection("singleProducts")
+        .doc(widget.foodName)
+        .collection("extras");
+
+    var snapshots = await collection.get();
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete()
+      .then((value) => print(doc.reference.toString() + "DELETED"));
+    }
+  }
+
+  Future<void> _increaseNumberOfProject(var docId, quantity) {
     User? user = _auth.currentUser;
     CollectionReference product = FirebaseFirestore.instance
         .collection('users')
@@ -166,7 +182,7 @@ class _CartItemState extends State<CartItem> {
             (error) => Fluttertoast.showToast(msg: "Something Went Wrong "));
   }
 
-  Future<void> decreaseNumberOfProject(var docId, quantity) {
+  Future<void> _decreaseNumberOfProject(var docId, quantity) {
     User? user = _auth.currentUser;
     CollectionReference product = FirebaseFirestore.instance
         .collection('users')
@@ -179,7 +195,7 @@ class _CartItemState extends State<CartItem> {
             (error) => Fluttertoast.showToast(msg: "Something Went Wrong "));
   }
 
-  Future<void> upgradeTotalPrice(var docId, totalPrice) {
+  Future<void> _upgradeTotalPrice(var docId, totalPrice) {
     User? user = _auth.currentUser;
     CollectionReference product = FirebaseFirestore.instance
         .collection('users')
