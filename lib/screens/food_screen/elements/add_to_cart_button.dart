@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fast_food_shop/models/shooing_cart.dart';
+import 'package:fast_food_shop/models/shoping_cart.dart';
 import 'package:fast_food_shop/screens/product_customize/customize.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +88,7 @@ class AddToCartButton extends StatelessWidget {
   }
 
 // We can update our order with this method
-  _upgradeOrder(
+   _upgradeOrder(
       String numberOfProduct, docId, User? user, Quantity quant) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 

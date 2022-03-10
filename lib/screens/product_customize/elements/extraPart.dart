@@ -9,6 +9,7 @@ class ExtraPart extends StatelessWidget {
 
   final String mainFoodName;
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,6 +33,7 @@ class ExtraPart extends StatelessWidget {
               itemBuilder: (context, index) {
                 DocumentSnapshot ds = snapshot.data.docs[index];
                 return ExtraItems(
+                  
                     imagePath: ds["imagePath"],
                     mainFoodName: mainFoodName,
                     foodName: ds["name"],

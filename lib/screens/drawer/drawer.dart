@@ -5,7 +5,6 @@ import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
 import 'package:fast_food_shop/models/user.dart';
 import 'package:fast_food_shop/screens/authentication/login/login_screen.dart';
 import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_account/my_account.dart';
-import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_orders.dart';
 import 'package:fast_food_shop/screens/shopping_cart/shopping_cart.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -68,11 +67,11 @@ class _DrawerrState extends State<Drawerr> {
                   buildTop(context),
                   buildMenuItem(
                       "My Account", Icons.account_circle, Profile(), context),
-                  buildMenuItem("My Orders", Icons.inventory_outlined,
-                      MyOrders(), context),
+                  
                   buildMenuItem("Shopping Cart", Icons.shopping_cart_outlined,
                       ShoppingCard(), context),
                   Divider(),
+                  buildMenuItem("Settings", Icons.settings, widget, context)
                 ],
               ),
               buildLogOutButton(),

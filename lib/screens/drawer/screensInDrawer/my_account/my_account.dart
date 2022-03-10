@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_food_shop/models/user.dart';
+import 'package:fast_food_shop/screens/adress/adress_page.dart';
 import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-
 
   @override
   void initState() {
@@ -32,95 +32,104 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage())),
-                  child: Container(
-                    child: Icon(Icons.arrow_back),
-                  ),
-                ),
-              ),
-              SizedBox(),
-            ],
-          ),
-          Column(
-            children: [
-              Container(
-                height: 130,
-                width: 130,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      blurRadius: 5,
-                      spreadRadius: 3,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                  color: Color(0xFFDBF0FF),
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage("assets/user/person.png"),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFE5F0F8).withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    "${loggedInUser.firstName} ${loggedInUser.secondName}",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: double.infinity,
-              height: 450,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Color(0xFFE5F0F8),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    blurRadius: 3,
-                    spreadRadius: 3,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildButton("Account Info"),
-                  buildButton("Address"),
-                  buildButton("Favorites"),
-                  buildButton("Security"),
-                  buildButton("Privacy"),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => MyHomePage())),
+                          child: Container(
+                            child: Icon(Icons.arrow_back),
+                          ),
+                        ),
+                      ),
+                      SizedBox(),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 5,
+                              spreadRadius: 3,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                          color: Color(0xFFDBF0FF),
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage("assets/user/person.png"),
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Container(
+                          padding: EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                "${loggedInUser.firstName} ${loggedInUser.secondName}",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500),
+                              ),
+                              Text(
+                                "${loggedInUser.email}",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: double.infinity,
+                  // height: 450,
+
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildItem("Address", Icons.location_history, Adress()),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  buildButton(String text, {Widget? widget}) {
+  _buildItem(String text, IconData icon, Widget widget) {
     return Padding(
       padding: EdgeInsets.all(8),
       child: InkWell(
@@ -128,22 +137,47 @@ class _ProfileState extends State<Profile> {
         child: Container(
           height: 50,
           width: double.infinity,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.white, boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 3,
-              blurRadius: 3,
-              offset: Offset(0, 3),
-            )
-          ]),
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Colors.black.withOpacity(0.7),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  blurRadius: 3,
+                  offset: Offset(1, 3),
+                )
+              ]),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(icon),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 2.0),
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black.withOpacity(0.7),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.grey.shade700,
+                  size: 16,
+                ),
+              ),
+            ],
           ),
         ),
       ),

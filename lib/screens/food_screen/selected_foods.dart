@@ -37,6 +37,20 @@ class _SellectedFoodState extends State<SellectedFood> {
                 ProductQuantity(price: widget.price, foodName: widget.foodName),
                 details(),
                 // I will put here product details
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16 ,16),
+                  child: Container(
+                    child: Column(
+                      children: [
+                        SingleChildScrollView(
+                          child: Container(
+                            child: Text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -53,7 +67,7 @@ class _SellectedFoodState extends State<SellectedFood> {
     return Padding(
       padding: EdgeInsets.all(16),
       child: Text(
-        "FEATURED",
+        "DETAILS",
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w700,

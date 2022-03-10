@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Customize extends StatefulWidget {
-  Customize({Key? key, required this.mainFoodName}) : super(key: key);
+  Customize({Key? key, required this.mainFoodName }) : super(key: key);
 
   final mainFoodName;
 
@@ -93,16 +93,11 @@ class _CustomizeState extends State<Customize> {
   }
 
   Future<void> _deleteExtras(User? user) async {
-    var collection = FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('users')
         .doc(user?.uid)
         .collection("singleProducts")
         .doc(widget.mainFoodName)
-        .collection("extras");
-
-    var snapshots = await collection.get();
-    for (var doc in snapshots.docs) {
-      await doc.reference.delete();
-    }
+        .update({"extras": {}});
   }
 }

@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ExtraItems extends StatefulWidget {
-  ExtraItems(
-      {Key? key,
-      required this.foodName,
-      required this.mainFoodName,
-      required this.imagePath,
-      required this.price})
-      : super(key: key);
+  ExtraItems({
+    Key? key,
+    required this.foodName,
+    required this.mainFoodName,
+    required this.imagePath,
+    required this.price,
+  }) : super(key: key);
   final String imagePath;
   final String foodName;
   final String mainFoodName;
+
   final String price;
   @override
   State<ExtraItems> createState() => _ExtraItemsState();
@@ -103,7 +103,6 @@ class _ExtraItemsState extends State<ExtraItems> {
                 onTap: () {
                   if (boolValue == false) {
                     _addExtra(user);
-                    print("${widget.foodName} added");
                     setState(() {
                       boolValue = !boolValue;
                       buttonColor = Colors.green.shade200;
@@ -111,7 +110,6 @@ class _ExtraItemsState extends State<ExtraItems> {
                     });
                   } else {
                     _deleteExtra(user);
-                    print("${widget.foodName} Çıkarıldı");
                     setState(() {
                       boolValue = !boolValue;
                       buttonColor = Colors.red;
@@ -121,7 +119,8 @@ class _ExtraItemsState extends State<ExtraItems> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      color: buttonColor, borderRadius: BorderRadius.circular(4)),
+                      color: buttonColor,
+                      borderRadius: BorderRadius.circular(4)),
                   height: 20,
                   width: 60,
                   child: Center(
@@ -139,31 +138,51 @@ class _ExtraItemsState extends State<ExtraItems> {
     );
   }
 
-  Future<void> _deleteExtra(User? user) {
-    CollectionReference product = FirebaseFirestore.instance
+  Future<void> _deleteExtra(User? user) async {
+    DocumentSnapshot doc = await FirebaseFirestore.instance
         .collection('users')
         .doc(user?.uid)
         .collection("singleProducts")
         .doc(widget.mainFoodName)
-        .collection("extras");
+        .get();
 
-    return product
-        .doc(widget.foodName)
-        .delete()
-        .catchError((error) => Fluttertoast.showToast(msg: error.toString()));
+    Map extras = doc["extras"];
+
+    var previusPrice = doc["totalProductPrice"];
+    var totalPrice = int.parse(previusPrice) - int.parse(widget.price);
+
+    extras.removeWhere((key, value) => key == widget.foodName);
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .collection("singleProducts")
+        .doc(widget.mainFoodName)
+        .update({"extras": extras, "totalProductPrice": totalPrice.toString()});
   }
 
-  Future<void> _addExtra(User? user) {
-    CollectionReference product = FirebaseFirestore.instance
+  Future<void> _addExtra(User? user) async {
+    final doc = await FirebaseFirestore.instance
         .collection('users')
         .doc(user?.uid)
         .collection("singleProducts")
         .doc(widget.mainFoodName)
-        .collection("extras");
+        .get();
 
-    return product.doc(widget.foodName).set({
-      'name': "${widget.foodName}",
-      'price': "${widget.price}"
-    }).catchError((error) => Fluttertoast.showToast(msg: error.toString()));
+    var previusPrice = doc["totalProductPrice"];
+    var totalPrice = int.parse(previusPrice) + int.parse(widget.price);
+
+    Map extrass = doc["extras"];
+    extrass[widget.foodName] = {
+      "name": "${widget.foodName}",
+      "price": "${widget.price}",
+    };
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .collection("singleProducts")
+        .doc(widget.mainFoodName)
+        .update(
+            {"extras": extrass, "totalProductPrice": totalPrice.toString()});
   }
 }

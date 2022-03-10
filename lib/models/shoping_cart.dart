@@ -5,6 +5,7 @@ class Cart {
   String? imagePath;
   String? numberOfProduct;
   String? totalProductPrice;
+  Map? extras;
 
   Cart(
       {this.idOfPerson,
@@ -12,7 +13,8 @@ class Cart {
       this.productPrice,
       this.imagePath,
       this.numberOfProduct,
-      this.totalProductPrice});
+      this.totalProductPrice,
+      this.extras});
 
   //For receive data
   factory Cart.fromMap(map) {
@@ -34,6 +36,7 @@ class Cart {
       'imagePath': imagePath,
       'numberOfProduct': numberOfProduct,
       'totalProductPrice': totalProductPrice,
+      'extras' : {}
     };
   }
 }
