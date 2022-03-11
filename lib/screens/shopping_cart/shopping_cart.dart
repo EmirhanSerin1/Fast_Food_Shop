@@ -14,7 +14,6 @@ class ShoppingCard extends StatefulWidget {
 class _ShoppingCardState extends State<ShoppingCard> {
   final _auth = FirebaseAuth.instance;
   List productsPrice = [];
-  List totalExtrasPrice = [];
   int total = 0;
 
   @override
@@ -41,7 +40,6 @@ class _ShoppingCardState extends State<ShoppingCard> {
           } else {
              List<QueryDocumentSnapshot> docsForProductPrice = snapshot.data.docs;
              productsPrice = docsForProductPrice.map((e) => e["totalProductPrice"]).toList();
-             totalExtrasPrice = docsForProductPrice.map((e) => e[{"extras": "price"}]).toList();
             // dynamic extras = docss.map((e) => e["extras"]).toList();
 
             // List extrass = extras[0].values.toList();
@@ -103,7 +101,7 @@ class _ShoppingCardState extends State<ShoppingCard> {
                             child: Row(
                               children: [
                                 Text("  Total:   "),
-                                Text(_getPrice()+"\$", style: TextStyle(fontSize: 18),),
+                                Text(_getPrice().toString()+"\$", style: TextStyle(fontSize: 18),),
                               ],
                             ),
                           ),
@@ -161,13 +159,14 @@ class _ShoppingCardState extends State<ShoppingCard> {
     );
   }
 
-  _getPrice() {
+   String _getPrice() {
     if (productsPrice.isNotEmpty) {
       return productsPrice.reduce(
         (value, element) {
-          return int.parse(value) + int.parse(element);
+          var sum = int.parse(value) + int.parse(element);
+          return sum.toString();
         },
-      ).toString();
+      );
     } else {
       return "0";
     }

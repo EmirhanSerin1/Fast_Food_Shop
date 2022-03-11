@@ -88,12 +88,13 @@ class _ProfileState extends State<Profile> {
                           child: Column(
                             children: [
                               Text(
-                                "${loggedInUser.firstName} ${loggedInUser.secondName}",
+                                // "${loggedInUser.firstName} ${loggedInUser.secondName}",
+                                FirebaseAuth.instance.currentUser?.displayName ?? "no name",
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                "${loggedInUser.email}",
+                                FirebaseAuth.instance.currentUser?.email ?? "no email",
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w400),
                               ),

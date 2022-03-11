@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
-import 'package:fast_food_shop/models/user.dart';
-import 'package:fast_food_shop/screens/authentication/login/login_screen.dart';
-import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_account/my_account.dart';
-import 'package:fast_food_shop/screens/shopping_cart/shopping_cart.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/profiile_photo/profil_photo.dart';
+import '../../models/user.dart';
+import '../authentication/login/login_screen.dart';
+import '../shopping_cart/shopping_cart.dart';
+import 'screensInDrawer/my_account/my_account.dart';
 
 class Drawerr extends StatefulWidget {
   @override
@@ -21,37 +21,37 @@ class _DrawerrState extends State<Drawerr> {
   UserModel loggedInUser = UserModel();
 
   // full name will come after delay
-  late Timer _timer;
-  Widget fullName = CircularProgressIndicator(strokeWidth: 1);
-  Widget email = CircularProgressIndicator(strokeWidth: 1);
+  // late Timer _timer;
+  // Widget fullName = CircularProgressIndicator(strokeWidth: 1);
+  // Widget email = CircularProgressIndicator(strokeWidth: 1);
 
-  _DrawerrState() {
-    _timer = new Timer(const Duration(milliseconds: 800), () {
-      setState(() {
-        fullName = fullNameAfterDelay;
-        email = emailAfterDelay;
-      });
-    });
-  }
+  // _DrawerrState() {
+  //   _timer = new Timer(const Duration(milliseconds: 800), () {
+  //     setState(() {
+  //       fullName = fullNameAfterDelay;
+  //       email = emailAfterDelay;
+  //     });
+  //   });
+  // }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _timer.cancel();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   _timer.cancel();
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   FirebaseFirestore.instance
+  //       .collection("users")
+  //       .doc(user!.uid)
+  //       .get()
+  //       .then((value) {
+  //     this.loggedInUser = UserModel.fromMap(value.data());
+  //     setState(() {});
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -190,22 +190,20 @@ class _DrawerrState extends State<Drawerr> {
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
-  get fullNameAfterDelay => SizedBox(
+  get fullName => SizedBox(
         width: MediaQuery.of(context).size.width * 0.5,
         child: Text(
-          "${loggedInUser.firstName} ${loggedInUser.secondName}",
+          FirebaseAuth.instance.currentUser?.displayName ?? "",
           style: TextStyle(fontWeight: FontWeight.w500),
         ),
       );
 
-  get emailAfterDelay => SizedBox(
+  get email => SizedBox(
         width: MediaQuery.of(context).size.width * 0.5,
         child: Text(
-          "${loggedInUser.email}",
+          FirebaseAuth.instance.currentUser?.email ?? "no email",
           style: TextStyle(color: Colors.grey, fontSize: 13),
         ),
       );

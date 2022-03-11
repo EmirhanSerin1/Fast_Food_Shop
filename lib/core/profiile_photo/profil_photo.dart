@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 buildProfilPhoto(double height, double width, Widget widget, BuildContext context) {
@@ -18,7 +19,8 @@ buildProfilPhoto(double height, double width, Widget widget, BuildContext contex
         color: Color(0xFFDBF0FF),
         shape: BoxShape.circle,
         image: DecorationImage(
-          image: AssetImage("assets/user/person.png"),
+          // image: AssetImage("assets/user/person.png"),
+          image: NetworkImage(FirebaseAuth.instance.currentUser?.photoURL ?? ""),
           fit: BoxFit.contain,
         ),
       ),

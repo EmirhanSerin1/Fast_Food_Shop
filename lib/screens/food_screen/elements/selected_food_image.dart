@@ -13,7 +13,7 @@ class SelectedFoodImage extends StatelessWidget {
       tag: heroTag,
       child: Container(
         height: 200,
-        width: 200,
+        width: double.infinity,
         decoration: BoxDecoration(
             image: DecorationImage(
           image: NetworkImage(imagePath),

@@ -22,42 +22,51 @@ class _SellectedFoodState extends State<SellectedFood> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height - 45,
-            width: MediaQuery.of(context).size.width,
-            child: ListView(
-              children: [
-                AppBarForSelectedFood(),
-                CustomName(text: "CRAZY"),
-                CustomName(text: widget.foodName.toString().toUpperCase()),
-                SizedBox(height: 40),
-                SelectedFoodImage(
-                    imagePath: widget.imagePath, heroTag: widget.heroTag),
-                SizedBox(height: 10),
-                ProductQuantity(price: widget.price, foodName: widget.foodName),
-                details(),
-                // I will put here product details
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16 ,16),
-                  child: Container(
-                    child: Column(
-                      children: [
-                        SingleChildScrollView(
-                          child: Container(
-                            child: Text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
-                          ),
-                        )
-                      ],
-                    ),
+          Expanded(
+            flex: 90,
+            child: Container(
+              height: MediaQuery.of(context).size.height - 45,
+              width: MediaQuery.of(context).size.width,
+              child: ListView(
+                children: [
+                  AppBarForSelectedFood(),
+                  CustomName(text: "CRAZY"),
+                  CustomName(text: widget.foodName.toString().toUpperCase()),
+                  SizedBox(height: 40),
+                  SelectedFoodImage(
+                    imagePath: widget.imagePath,
+                    heroTag: widget.heroTag,
                   ),
-                )
-              ],
+                  SizedBox(height: 10),
+                  ProductQuantity(price: widget.price, foodName: widget.foodName),
+                  details(),
+                  // I will put here product details
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    child: Container(
+                      child: Column(
+                        children: [
+                          SingleChildScrollView(
+                            child: Container(
+                              child: Text(
+                                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          AddToCartButton(
-              foodName: widget.foodName,
-              price: widget.price,
-              imagePath: widget.imagePath)
+          Expanded(
+            flex: 8,
+            child: AddToCartButton(
+                foodName: widget.foodName,
+                price: widget.price,
+                imagePath: widget.imagePath),
+          )
         ],
       ),
     );

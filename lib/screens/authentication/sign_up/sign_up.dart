@@ -245,9 +245,18 @@ class _SingUpScreenState extends State<SingUpScreen> {
   void signUP(String email, password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        await _auth
-            .createUserWithEmailAndPassword(email: email, password: password)
-            .then((value) => {sendDetailsToFirestore()});
+        UserCredential userCredential = await _auth
+            .createUserWithEmailAndPassword(email: email, password: password);
+
+        await userCredential.user?.updateDisplayName(
+          firstNameController.text.trim() +
+              " " +
+              secondNameController.text.trim(),
+        );
+
+      await userCredential.user?.updatePhotoURL("https://randomuser.me/api/portraits/men/75.jpg");
+  
+        await sendDetailsToFirestore();
       } on Exception catch (e) {
         Fluttertoast.showToast(msg: e.toString());
       } catch (e) {

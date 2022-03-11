@@ -211,9 +211,11 @@ class _CartItemState extends State<CartItem> {
         .doc(user?.uid)
         .collection("singleProducts");
 
+    var upgradedPrice = totalPrice + total;
+
     return product
         .doc(docId)
-        .update({"totalProductPrice": totalPrice.toString()}).catchError(
+        .update({"totalProductPrice": upgradedPrice.toString()}).catchError(
             (error) => Fluttertoast.showToast(msg: "Something Went Wrong "));
   }
 
