@@ -50,11 +50,11 @@ class _ProductslistState extends State<Productslist> {
 
             return Consumer<SearchProvider>(builder: (context, value, child) {
               List<Product> liste = [];
+              
+              //For check
               if (value.newList.isEmpty) {
-                print(1);
                 liste = value.itemsList;
               } else {
-                print(2);
                 liste = value.newList;
 
               }
@@ -63,7 +63,7 @@ class _ProductslistState extends State<Productslist> {
                 scrollDirection: Axis.horizontal,
                 itemCount: liste.length,
                 itemBuilder: (context, index) {
-                  return ProductList(
+                  return ProductItem(
                     foodName: liste[index].name,
                     imagePath: liste[index].image,
                     price: liste[index].price,

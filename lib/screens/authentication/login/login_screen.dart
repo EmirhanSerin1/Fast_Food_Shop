@@ -168,8 +168,8 @@ class _LoginScreenState extends State<LoginScreen> {
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
-                  // Navigator.pushReplacement(context,
-                  //     MaterialPageRoute(builder: (context) => MyHomePage()))
+                  Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => MyHomePage()))
                 });
       } on Exception catch (e) {
         Fluttertoast.showToast(msg: e.toString());

@@ -19,8 +19,8 @@ buildProfilPhoto(double height, double width, Widget widget, BuildContext contex
         color: Color(0xFFDBF0FF),
         shape: BoxShape.circle,
         image: DecorationImage(
-          // image: AssetImage("assets/user/person.png"),
-          image: NetworkImage(FirebaseAuth.instance.currentUser?.photoURL ?? ""),
+          image: AssetImage("assets/user/person.png"),
+          // image: NetworkImage(FirebaseAuth.instance.currentUser?.photoURL ?? ""),
           fit: BoxFit.contain,
         ),
       ),

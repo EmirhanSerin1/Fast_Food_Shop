@@ -38,21 +38,8 @@ class _ShoppingCardState extends State<ShoppingCard> {
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return SizedBox();
           } else {
-             List<QueryDocumentSnapshot> docsForProductPrice = snapshot.data.docs;
+            List<QueryDocumentSnapshot> docsForProductPrice = snapshot.data.docs;
              productsPrice = docsForProductPrice.map((e) => e["totalProductPrice"]).toList();
-            // dynamic extras = docss.map((e) => e["extras"]).toList();
-
-            // List extrass = extras[0].values.toList();
-
-            // print(extrass);
-
-            // for (var i in extrass) {
-            //   total += int.parse(i["price"]);
-            // }
-            // print(total.toString());
-            // print(
-            //     "***********************************************************");
-
             return Column(
               children: [
                 Expanded(
@@ -85,23 +72,26 @@ class _ShoppingCardState extends State<ShoppingCard> {
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: const Offset(1, 3),
-                                    color: Colors.grey.withOpacity(0.3),
-                                    spreadRadius: 2,
-                                    blurRadius: 2,
-                                  )
-                                ],
-                              ),
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(1, 3),
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 2,
+                                  blurRadius: 2,
+                                )
+                              ],
+                            ),
                             height: 40,
                             width: MediaQuery.of(context).size.width / 2.5,
                             child: Row(
                               children: [
                                 Text("  Total:   "),
-                                Text(_getPrice().toString()+"\$", style: TextStyle(fontSize: 18),),
+                                Text(
+                                  _getPrice().toString() + "\$",
+                                  style: TextStyle(fontSize: 18),
+                                ),
                               ],
                             ),
                           ),
@@ -159,14 +149,16 @@ class _ShoppingCardState extends State<ShoppingCard> {
     );
   }
 
-   String _getPrice() {
+  _getPrice()  {
+    
     if (productsPrice.isNotEmpty) {
-      return productsPrice.reduce(
+       return productsPrice.reduce(
         (value, element) {
           var sum = int.parse(value) + int.parse(element);
           return sum.toString();
         },
       );
+      
     } else {
       return "0";
     }

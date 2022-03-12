@@ -1,9 +1,8 @@
-
 import 'package:fast_food_shop/screens/food_screen/selected_foods.dart';
 import 'package:flutter/material.dart';
 
-class ProductList extends StatefulWidget {
-  const ProductList({
+class ProductItem extends StatefulWidget {
+  const ProductItem({
     Key? key,
     required this.foodName,
     required this.imagePath,
@@ -16,10 +15,10 @@ class ProductList extends StatefulWidget {
   final color, textColor;
 
   @override
-  _ProductListState createState() => _ProductListState();
+  _ProductItemState createState() => _ProductItemState();
 }
 
-class _ProductListState extends State<ProductList> {
+class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,16 +40,17 @@ class _ProductListState extends State<ProductList> {
           height: 174,
           width: 150,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: widget.color,
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(1, 3),
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 2,
-                )
-              ]),
+            borderRadius: BorderRadius.circular(12),
+            color: widget.color,
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(1, 3),
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 2,
+              )
+            ],
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -72,7 +72,10 @@ class _ProductListState extends State<ProductList> {
               SizedBox(height: 25),
               Text(
                 widget.foodName,
-                style: TextStyle(fontSize: 17, color: widget.textColor, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontSize: 17,
+                    color: widget.textColor,
+                    fontWeight: FontWeight.w500),
               ),
               Text(
                 "\$" + widget.price,

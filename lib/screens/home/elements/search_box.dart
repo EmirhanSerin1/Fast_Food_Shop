@@ -3,10 +3,24 @@ import 'package:provider/provider.dart';
 
 import '../../../providers/search_provider.dart';
 
+class SearchBox extends StatefulWidget {
+  const SearchBox({Key? key}) : super(key: key);
 
-buildSearchBox(BuildContext context){
-  SearchProvider prov = Provider.of<SearchProvider>(context, listen: false);
-    final controller = TextEditingController();
+  @override
+  State<SearchBox> createState() => _SearchBoxState();
+}
+
+class _SearchBoxState extends State<SearchBox> {
+
+
+  
+
+  @override
+  Widget build(BuildContext context) {
+    SearchProvider prov = Provider.of<SearchProvider>(context, listen: false);
+    final controller =
+        Provider.of<SearchProvider>(context, listen: false).nameController;
+
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16),
       child: Container(
@@ -16,7 +30,12 @@ buildSearchBox(BuildContext context){
           borderRadius: BorderRadius.circular(12),
         ),
         child: TextField(
-          onChanged: prov.onSearch,
+          onChanged: (name) {
+            prov.onSearch();
+            if (controller.text.isEmpty) {
+              FocusScope.of(context).unfocus();
+            }
+          },
           controller: controller,
           decoration: InputDecoration(
             hintText: "Search",
@@ -30,6 +49,8 @@ buildSearchBox(BuildContext context){
             suffixIcon: IconButton(
               onPressed: () {
                 controller.clear();
+                prov.onSearch();
+                FocusScope.of(context).unfocus();
               },
               icon: Icon(Icons.clear),
               color: Colors.grey,
@@ -38,4 +59,5 @@ buildSearchBox(BuildContext context){
         ),
       ),
     );
+  }
 }

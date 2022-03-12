@@ -8,6 +8,7 @@ import '../../models/user.dart';
 import '../authentication/login/login_screen.dart';
 import '../shopping_cart/shopping_cart.dart';
 import 'screensInDrawer/my_account/my_account.dart';
+import 'screensInDrawer/my_account/settings.dart';
 
 class Drawerr extends StatefulWidget {
   @override
@@ -59,22 +60,21 @@ class _DrawerrState extends State<Drawerr> {
       width: MediaQuery.of(context).size.width * 0.85,
       child: Drawer(
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: ListView(
             children: [
               Column(
                 children: [
                   buildTop(context),
                   buildMenuItem(
                       "My Account", Icons.account_circle, Profile(), context),
-                  
                   buildMenuItem("Shopping Cart", Icons.shopping_cart_outlined,
                       ShoppingCard(), context),
                   Divider(),
-                  buildMenuItem("Settings", Icons.settings, widget, context)
+                  buildMenuItem(
+                      "Settings", Icons.settings, Settings(), context),
+                  buildLogOutButton(),
                 ],
               ),
-              buildLogOutButton(),
             ],
           ),
         ),
@@ -153,44 +153,72 @@ class _DrawerrState extends State<Drawerr> {
   }
 
   buildLogOutButton() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Color.fromARGB(255, 243, 238, 238),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 3,
-              color: Colors.black.withOpacity(0.3),
-              offset: Offset(3, 3),
-            )
-          ]),
-      height: 50,
-      width: double.infinity,
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Log Out"),
-            ),
-            IconButton(
-                onPressed: () {
-                  logout(context);
-                },
-                icon: Icon(
-                  Icons.power_settings_new,
-                  color: Colors.red,
-                )),
-          ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Color.fromARGB(255, 243, 238, 238),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 3,
+                color: Colors.red.withOpacity(0.3),
+                offset: Offset(3, 3),
+              )
+            ]),
+        height: 50,
+        width: double.infinity,
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Log Out"),
+              ),
+              IconButton(
+                  onPressed: () {
+                    showAlertdialog();
+                    // logout(context);
+                  },
+                  icon: Icon(
+                    Icons.power_settings_new,
+                    color: Colors.red,
+                  )),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Future<void> logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
+  showAlertdialog() {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to sign out of your account?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => logout(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+    
   }
+
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut().then((value) =>
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginScreen())));
+  }
+
 
   get fullName => SizedBox(
         width: MediaQuery.of(context).size.width * 0.5,

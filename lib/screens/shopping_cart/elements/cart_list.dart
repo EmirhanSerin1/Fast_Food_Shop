@@ -33,8 +33,6 @@ class _CartItemState extends State<CartItem> {
 
   List productsPrice = [];
   List extrasPrice = [];
-  
-  
 
   @override
   Widget build(BuildContext context) {
@@ -96,13 +94,15 @@ class _CartItemState extends State<CartItem> {
                                 icon: Icon(Icons.arrow_back_ios),
                                 onPressed: () {
                                   quantity = int.parse(widget.numberOfProduct);
-                                  quantity--;
-                                  var totalPrice =
-                                      quantity * int.parse(widget.price);
-                                  _decreaseNumberOfProject(
-                                      widget.foodName, quantity);
-                                  _upgradeTotalPrice(
-                                      widget.foodName, totalPrice);
+                                  if (quantity > 1) {
+                                    quantity--;
+                                    var totalPrice =
+                                        quantity * int.parse(widget.price);
+                                    _decreaseNumberOfProject(
+                                        widget.foodName, quantity);
+                                    _upgradeTotalPrice(
+                                        widget.foodName, totalPrice);
+                                  }
                                 },
                               ),
                             ),
@@ -134,7 +134,6 @@ class _CartItemState extends State<CartItem> {
                 ],
               ),
               Row(
-                
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,8 +143,12 @@ class _CartItemState extends State<CartItem> {
                         "${totalPrice + total}" + "\$ ",
                         style: TextStyle(fontSize: 18),
                       ),
-                       Text(
-                        "("+totalPrice.toString()+ "+"+ total.toString() +")",
+                      Text(
+                        "(" +
+                            totalPrice.toString() +
+                            "+" +
+                            total.toString() +
+                            ")",
                         style: TextStyle(fontSize: 12, color: Colors.grey),
                       ),
                     ],
@@ -191,7 +194,7 @@ class _CartItemState extends State<CartItem> {
             (error) => Fluttertoast.showToast(msg: "Something Went Wrong "));
   }
 
-  Future<void> _decreaseNumberOfProject(var docId, quantity) async{
+  Future<void> _decreaseNumberOfProject(var docId, quantity) async {
     User? user = _auth.currentUser;
     CollectionReference product = FirebaseFirestore.instance
         .collection('users')
@@ -219,7 +222,7 @@ class _CartItemState extends State<CartItem> {
             (error) => Fluttertoast.showToast(msg: "Something Went Wrong "));
   }
 
-   int getExtrasPrice(
+  int getExtrasPrice(
       AsyncSnapshot snapshot, List<QueryDocumentSnapshot> docss, int index) {
     var total = 0;
     dynamic extras = docss.map((e) => e["extras"]).toList();
@@ -229,12 +232,7 @@ class _CartItemState extends State<CartItem> {
       total += int.parse(i["price"]);
     }
 
-    print("********************************************");
-    print(extrass);
-    print(total);
-
     return total;
-
   }
 
   get total => getExtrasPrice(widget.snapshot, widget.docss, widget.index);
