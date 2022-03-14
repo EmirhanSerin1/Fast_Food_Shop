@@ -42,6 +42,7 @@ class _ProductslistState extends State<Productslist> {
                   name: e["name"],
                   image: e["image"],
                   price: e["price"],
+                  details: e["details"]
                 );
               },
             ).toList();
@@ -67,6 +68,7 @@ class _ProductslistState extends State<Productslist> {
                     foodName: liste[index].name,
                     imagePath: liste[index].image,
                     price: liste[index].price,
+                    details: liste[index].details,
                     color: Color(0xFFFD6750),
                     textColor: Colors.white,
                   );

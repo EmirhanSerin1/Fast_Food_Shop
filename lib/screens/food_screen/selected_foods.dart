@@ -7,9 +7,14 @@ import 'elements/custom_name.dart';
 import 'elements/selected_food_image.dart';
 
 class SellectedFood extends StatefulWidget {
-  final imagePath, foodName, price, heroTag;
+  final imagePath, foodName, price, heroTag, details;
 
-  SellectedFood({this.imagePath, this.foodName, this.heroTag, this.price});
+  SellectedFood(
+      {required this.imagePath,
+      required this.foodName,
+      required this.heroTag,
+      required this.price,
+      required this.details});
 
   @override
   _SellectedFoodState createState() => _SellectedFoodState();
@@ -38,7 +43,8 @@ class _SellectedFoodState extends State<SellectedFood> {
                     heroTag: widget.heroTag,
                   ),
                   SizedBox(height: 10),
-                  ProductQuantity(price: widget.price, foodName: widget.foodName),
+                  ProductQuantity(
+                      price: widget.price, foodName: widget.foodName),
                   details(),
                   // I will put here product details
                   Padding(
@@ -49,7 +55,9 @@ class _SellectedFoodState extends State<SellectedFood> {
                           SingleChildScrollView(
                             child: Container(
                               child: Text(
-                                  "Product Details Will Come to Here"),
+                                widget.details,
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
                             ),
                           )
                         ],

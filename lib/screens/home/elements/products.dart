@@ -10,9 +10,10 @@ class ProductItem extends StatefulWidget {
     required this.price,
     required this.color,
     required this.textColor,
+    required this.details
   }) : super(key: key);
 
-  final String foodName, imagePath, price;
+  final String foodName, imagePath, price, details;
   final color, textColor;
 
   @override
@@ -33,6 +34,7 @@ class _ProductItemState extends State<ProductItem> {
                 price: widget.price,
                 imagePath: widget.imagePath,
                 heroTag: widget.foodName,
+                details: widget.details,
               ),
             ),
           );
