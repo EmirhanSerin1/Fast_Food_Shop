@@ -35,13 +35,13 @@ You can see your products from shopping cart page. You can increase, decrease an
   <img src="assets/screenshots/Screenshot_extra_check.jpg" width="200" >
 </p>
 
-And you can spend money with payment Page. Also there is an animation in credit cart.
+And you can spend money with payment page. Also there is an animation in credit cart.
 
 <p float="left">
   <img src="assets/screenshots/Screenshot_payment.jpg" width="200" >
 </p>
 
-Other ScreenShots
+Other screenshots
 
 <p float="left">
   <img src="assets/screenshots/Screenshot_profile.jpg" width="200" >
