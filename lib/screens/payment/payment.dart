@@ -145,68 +145,6 @@ class _PaymentState extends State<Payment> {
             ),
           )
 
-          // Container(
-          //   height: MediaQuery.of(context).size.height / 3,
-          //   padding: const EdgeInsets.all(8),
-          //   width: double.infinity,
-          //   color: Colors.white,
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Row(
-          //         crossAxisAlignment: CrossAxisAlignment.end,
-          //         children: [
-          //          s Text(
-          //             "Total: ",
-          //             style: TextStyle(fontSize: 16),
-          //           ),
-          //           Text(
-          //             widget.total + "\$",
-          //             style: TextStyle(fontSize: 18),
-          //           ),
-          //         ],
-          //       ),
-          //       Row(
-          //         children: [
-          //           SizedBox(
-          //             width: MediaQuery.of(context).size.width / 2.5,
-          //           ),
-          //           Column(
-          //             crossAxisAlignment: CrossAxisAlignment.start,
-          //             children: [
-          //               Text(
-          //                 "Products",
-          //                 style: TextStyle(color: Colors.black),
-          //               ),
-          //               Container(
-          //                 height: 60,
-          //                 width: MediaQuery.of(context).size.width / 1.8,
-          //                 color: Colors.grey.shade200,
-          //                 child: ListView.builder(
-          //                   itemCount: 5,
-          //                   itemBuilder: (context, index) => getProducts(),
-          //                 ),
-          //               ),
-          //               Text(
-          //                 "Extras",
-          //                 style: TextStyle(color: Colors.black),
-          //               ),
-          //               Container(
-          //                 height: 60,
-          //                 width: MediaQuery.of(context).size.width / 1.8,
-          //                 color: Colors.grey.shade200,
-          //                 child: ListView.builder(
-          //                   itemCount: 5,
-          //                   itemBuilder: (context, index) => getExtras(),
-          //                 ),
-          //               ),
-          //             ],
-          //           )
-          //         ],
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );

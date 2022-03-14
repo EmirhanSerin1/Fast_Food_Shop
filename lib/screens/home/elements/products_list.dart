@@ -35,7 +35,7 @@ class _ProductslistState extends State<Productslist> {
             return SizedBox();
           } else {
             List<QueryDocumentSnapshot> docs = snapshot.data.docs;
-            final listee = docs.map(
+            final productList = docs.map(
               (e) {
                 return Product(
                   id: e.id,
@@ -46,7 +46,7 @@ class _ProductslistState extends State<Productslist> {
               },
             ).toList();
             Provider.of<SearchProvider>(context, listen: false)
-                .setItems(listee);
+                .setItems(productList);
 
             return Consumer<SearchProvider>(builder: (context, value, child) {
               List<Product> liste = [];

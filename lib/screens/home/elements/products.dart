@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fast_food_shop/screens/food_screen/selected_foods.dart';
 import 'package:flutter/material.dart';
 
@@ -64,8 +65,12 @@ class _ProductItemState extends State<ProductItem> {
                     shape: BoxShape.circle,
                   ),
                   child: Center(
-                    child:
-                        Image.network(widget.imagePath, height: 50, width: 50),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.imagePath,
+                      width: 50,
+                      height: 50,
+                    )
+                        // Image.network(widget.imagePath, height: 50, width: 50),
                   ),
                 ),
               ),
