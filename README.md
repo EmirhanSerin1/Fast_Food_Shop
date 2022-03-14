@@ -1,4 +1,4 @@
-#Crazy Fast Food
+# Crazy Fast Food
 
 This app is a fast food shopping app made with Flutter. Database operations are carried out with Firebase. I used provider for stage management
 
