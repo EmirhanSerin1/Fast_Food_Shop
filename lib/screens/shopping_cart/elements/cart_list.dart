@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -63,18 +64,12 @@ class _CartItemState extends State<CartItem> {
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Container(
-                      height: 70,
-                      width: 70,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(widget.imagePath),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ),
+                      padding: const EdgeInsets.all(2.0),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.imagePath,
+                        height: 70,
+                        width: 70,
+                      )),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 4, 0, 4),
                     child: Column(

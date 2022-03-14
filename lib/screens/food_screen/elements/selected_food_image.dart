@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class SelectedFoodImage extends StatelessWidget {
@@ -11,15 +12,7 @@ class SelectedFoodImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hero(
       tag: heroTag,
-      child: Container(
-        height: 200,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          image: NetworkImage(imagePath),
-          fit: BoxFit.contain,
-        )),
-      ),
+      child: CachedNetworkImage(imageUrl: imagePath, width: double.infinity, height: 200,)
     );
   }
 }
