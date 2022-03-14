@@ -93,19 +93,19 @@ class _MyHomePageState extends State<MyHomePage>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildSpecialButtons(context, Colors.red.shade300,
-                          "Shopping Cart", ShoppingCard()),
-                      _buildSpecialButtons(context, Colors.orange.shade300,
-                          "Who Am I", ShoppingCard()),
+                      _buildSpecialButtons(
+                          context, Colors.red, "Shopping Cart", ShoppingCard()),
+                      _buildSpecialButtons(
+                          context, Colors.orange, "Who Am I", ShoppingCard()),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildSpecialButtons(context, Colors.purple.shade300,
+                      _buildSpecialButtons(context, Colors.purple,
                           "Social Media Account", ShoppingCard()),
-                      _buildSpecialButtons(context, Colors.green.shade300,
-                          "Profile", ShoppingCard()),
+                      _buildSpecialButtons(
+                          context, Colors.green, "Profile", ShoppingCard()),
                     ],
                   ),
                 ],
@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage>
             context, MaterialPageRoute(builder: (context) => widget)),
         child: Container(
           width: MediaQuery.of(context).size.width / 2.3,
-          height: 60,
+          height: 100,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: color,
@@ -142,7 +142,10 @@ class _MyHomePageState extends State<MyHomePage>
           child: Center(
             child: Text(
               text,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
             ),
           ),
         ),

@@ -30,6 +30,7 @@ class _SearchBoxState extends State<SearchBox> {
           borderRadius: BorderRadius.circular(12),
         ),
         child: TextField(
+          autofocus: false,
           onChanged: (name) {
             prov.onSearch();
             if (controller.text.isEmpty) {

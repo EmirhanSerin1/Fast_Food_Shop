@@ -49,7 +49,7 @@ class _SellectedFoodState extends State<SellectedFood> {
                           SingleChildScrollView(
                             child: Container(
                               child: Text(
-                                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+                                  "Product Details Will Come to Here"),
                             ),
                           )
                         ],

@@ -102,7 +102,7 @@ class _ShoppingCardState extends State<ShoppingCard> {
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Payment())),
+                                    builder: (context) => Payment(total: _getPrice().toString()))),
                             child: Container(
                               height: 40,
                               width: MediaQuery.of(context).size.width / 2,
@@ -124,7 +124,7 @@ class _ShoppingCardState extends State<ShoppingCard> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Go to payment Page",
+                                    "Go to Address Page",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 15,

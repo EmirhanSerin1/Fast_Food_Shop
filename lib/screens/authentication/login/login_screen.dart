@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
         shadowColor: Colors.grey,
         borderRadius: BorderRadius.circular(18),
         child: MaterialButton(
-          minWidth: MediaQuery.of(context).size.width/2,
+          minWidth: MediaQuery.of(context).size.width / 2,
           onPressed: () {
             signIn(emailController.text, passwordController.text);
           },
@@ -96,11 +96,13 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-            prefixIcon: Icon(Icons.mail, color: Theme.of(context).primaryColor),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Email",
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          prefixIcon: Icon(Icons.mail, color: Theme.of(context).primaryColor),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Email",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
       ),
     );
   }
@@ -169,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => MyHomePage()))
+                      MaterialPageRoute(builder: (context) => MyHomePage()))
                 });
       } on Exception catch (e) {
         Fluttertoast.showToast(msg: e.toString());

@@ -8,7 +8,7 @@ import '../../models/user.dart';
 import '../authentication/login/login_screen.dart';
 import '../shopping_cart/shopping_cart.dart';
 import 'screensInDrawer/my_account/my_account.dart';
-import 'screensInDrawer/my_account/settings.dart';
+import 'screensInDrawer/settings/settings.dart';
 
 class Drawerr extends StatefulWidget {
   @override
