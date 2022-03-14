@@ -3,6 +3,7 @@ import 'package:fast_food_shop/screens/payment/payment.dart';
 import 'package:fast_food_shop/screens/shopping_cart/elements/cart_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ShoppingCard extends StatefulWidget {
   ShoppingCard({Key? key}) : super(key: key);
@@ -38,10 +39,31 @@ class _ShoppingCardState extends State<ShoppingCard> {
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return SizedBox();
           } else {
-            List<QueryDocumentSnapshot> docsForProductPrice = snapshot.data.docs;
-             productsPrice = docsForProductPrice.map((e) => e["totalProductPrice"]).toList();
+            List<QueryDocumentSnapshot> docsForProductPrice =
+                snapshot.data.docs;
+            productsPrice =
+                docsForProductPrice.map((e) => e["totalProductPrice"]).toList();
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Expanded(
+                    flex: 7,
+                    child: Container(
+                      color: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FaIcon(FontAwesomeIcons.question, size: 15,),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Long Press on Food Image for Checking Extras"),
+                          ),
+                        ],
+                      ),
+                    )),
                 Expanded(
                   flex: 90,
                   child: ListView.builder(
@@ -102,7 +124,8 @@ class _ShoppingCardState extends State<ShoppingCard> {
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Payment(total: _getPrice().toString()))),
+                                    builder: (context) => Payment(
+                                        total: _getPrice().toString()))),
                             child: Container(
                               height: 40,
                               width: MediaQuery.of(context).size.width / 2,
@@ -149,16 +172,14 @@ class _ShoppingCardState extends State<ShoppingCard> {
     );
   }
 
-  _getPrice()  {
-    
+  _getPrice() {
     if (productsPrice.isNotEmpty) {
-       return productsPrice.reduce(
+      return productsPrice.reduce(
         (value, element) {
           var sum = int.parse(value) + int.parse(element);
           return sum.toString();
         },
       );
-      
     } else {
       return "0";
     }

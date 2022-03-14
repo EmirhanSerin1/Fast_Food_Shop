@@ -21,8 +21,8 @@ class CartItem extends StatefulWidget {
   final User? user;
   final int index;
 
-  AsyncSnapshot snapshot;
-  List<QueryDocumentSnapshot> docss;
+  final AsyncSnapshot snapshot;
+  final List<QueryDocumentSnapshot> docss;
 
   @override
   _CartItemState createState() => _CartItemState();
@@ -41,7 +41,7 @@ class _CartItemState extends State<CartItem> {
     var totalPrice =
         int.parse(widget.price) * int.parse(widget.numberOfProduct);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
@@ -62,19 +62,26 @@ class _CartItemState extends State<CartItem> {
             scrollDirection: Axis.horizontal,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: CachedNetworkImage(
-                        imageUrl: widget.imagePath,
-                        height: 70,
-                        width: 70,
-                      )),
+                  InkWell(
+                    onLongPress: () {
+                      getExtraList(widget.snapshot, widget.docss, widget.index);
+                      _showAlertdialog(widget.snapshot);
+                    },
+                    child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.imagePath,
+                          height: 70,
+                          width: 70,
+                        )),
+                  ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 4, 0, 4),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           widget.foodName,
@@ -164,6 +171,36 @@ class _CartItemState extends State<CartItem> {
     );
   }
 
+  _showAlertdialog(AsyncSnapshot snapshot) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Extras'),
+        content: Container(
+          height: 75,
+          child: ListView.builder(
+            itemCount: listOfExtrasLenght,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(listOfExtras[index]["name"] +
+                    " : " +
+                    listOfExtras[index]["price"] +
+                    "\$"),
+              );
+            },
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _deleteProduct(var docId, User? user) {
     CollectionReference product = FirebaseFirestore.instance
         .collection('users')
@@ -231,4 +268,16 @@ class _CartItemState extends State<CartItem> {
   }
 
   get total => getExtrasPrice(widget.snapshot, widget.docss, widget.index);
+
+  List getExtraList(
+      AsyncSnapshot snapshot, List<QueryDocumentSnapshot> docss, int index) {
+    dynamic extras = docss.map((e) => e["extras"]).toList();
+    List extrass = extras[index].values.toList();
+    print(extrass[0]["name"]);
+    return extrass;
+  }
+
+  get listOfExtras => getExtraList(widget.snapshot, widget.docss, widget.index);
+  int get listOfExtrasLenght =>
+      getExtraList(widget.snapshot, widget.docss, widget.index).length;
 }

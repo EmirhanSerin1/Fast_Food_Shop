@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_food_shop/providers/quantity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -102,16 +101,16 @@ class _ProductQuantityState extends State<ProductQuantity> {
     );
   }
 
-  _getDocData(User? user, Quantity quant) async {
+  // _getDocData(User? user, Quantity quant) async {
 
-    FirebaseFirestore db = FirebaseFirestore.instance;
-    var docRef = db
-        .collection("users")
-        .doc(user?.uid)
-        .collection("singleProducts")
-        .doc(widget.foodName)
-        .collection("extras")
-        .doc();
+  //   FirebaseFirestore db = FirebaseFirestore.instance;
+  //   var docRef = db
+  //       .collection("users")
+  //       .doc(user?.uid)
+  //       .collection("singleProducts")
+  //       .doc(widget.foodName)
+  //       .collection("extras")
+  //       .doc();
 
-  }
+  // }
 }

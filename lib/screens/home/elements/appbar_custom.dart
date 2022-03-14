@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
 import 'package:fast_food_shop/screens/drawer/screensInDrawer/my_account/my_account.dart';
-import 'package:fast_food_shop/screens/food_screen/elements/app_bar_selected_food.dart';
 import 'package:fast_food_shop/screens/shopping_cart/shopping_cart.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

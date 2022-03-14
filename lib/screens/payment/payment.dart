@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fast_food_shop/screens/adress/deneme.dart';
-import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
+import '../adress/deneme.dart';
 
 class Payment extends StatefulWidget {
   Payment({Key? key, required this.total}) : super(key: key);
@@ -19,7 +18,7 @@ class _PaymentState extends State<Payment> {
   final expiredDateController = TextEditingController();
   final cVVController = TextEditingController();
   final nameController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  // final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
 
   List address = [];

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-import 'package:flutter_credit_card/credit_card_model.dart';
 
 class CreditCard extends StatefulWidget {
   const CreditCard({Key? key}) : super(key: key);

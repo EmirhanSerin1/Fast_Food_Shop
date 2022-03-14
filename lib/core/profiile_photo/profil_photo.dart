@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 buildProfilPhoto(double height, double width, Widget widget, BuildContext context) {

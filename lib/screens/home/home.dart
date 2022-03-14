@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
-import '../../providers/search_provider.dart';
 import '../drawer/drawer.dart';
 import '../shopping_cart/shopping_cart.dart';
 import 'elements/appbar_custom.dart';
@@ -54,40 +52,6 @@ class _MyHomePageState extends State<MyHomePage>
               SizedBox(height: 15),
               Productslist(),
               SizedBox(height: 10),
-              // Padding(
-              //   padding: EdgeInsets.only(left: 15),
-              //   child: TabBar(
-              //     controller: tabController,
-              //     isScrollable: true,
-              //     indicatorColor: Colors.transparent,
-              //     labelColor: Colors.black,
-              //     unselectedLabelColor: Colors.grey.withOpacity(0.5),
-              //     labelStyle: TextStyle(
-              //       fontSize: 16,
-              //       fontWeight: FontWeight.w600,
-              //     ),
-              //     unselectedLabelStyle:
-              //         TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-              //     tabs: [
-              //       Tab(child: Text("FEATURED")),
-              //       Tab(child: Text("CHEAPEST")),
-              //       Tab(child: Text("FAVORITES")),
-              //       Tab(child: Text("RECOMMENDED")),
-              //     ],
-              //   ),
-              // ),
-              // Container(
-              //   height: MediaQuery.of(context).size.height - 450,
-              //   child: TabBarView(
-              //     controller: tabController,
-              //     children: [
-              //       FoodTab(),
-              //       CheapestTabs(),
-              //       FavoritesTabs(),
-              //       RecommendedTabs(),
-              //     ],
-              //   ),
-              // )
               Column(
                 children: [
                   Row(
