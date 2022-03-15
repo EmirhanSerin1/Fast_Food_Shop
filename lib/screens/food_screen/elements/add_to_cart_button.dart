@@ -26,8 +26,8 @@ class AddToCartButton extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-       getDoc(user, quant);
-       Navigator.of(context).push(_createRoute(this.foodName));
+        getDoc(user, quant);
+        Navigator.of(context).push(_createRoute(this.foodName));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -36,26 +36,17 @@ class AddToCartButton extends StatelessWidget {
         width: double.infinity,
         height: 45,
         child: Center(
-          child: StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(user?.uid)
-                  .collection("singleProducts")
-                  .snapshots(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                return Container(
-                  padding: EdgeInsets.fromLTRB(4, 8, 4, 8),
-                  child: Text(
-                    "Add to cart",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                );
-              }),
-        ),
+            child: Container(
+          padding: EdgeInsets.fromLTRB(4, 8, 4, 8),
+          child: Text(
+            "Add to cart",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        )),
       ),
     );
   }
@@ -88,12 +79,23 @@ class AddToCartButton extends StatelessWidget {
   }
 
 // We can update our order with this method
-   _upgradeOrder(
+  _upgradeOrder(
       String numberOfProduct, docId, User? user, Quantity quant) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
+    var doc = await firebaseFirestore
+    .collection("users")
+    .doc(user?.uid)
+    .collection("singleProducts")
+    .doc(docId)
+    .get();
+
+     var previusPrice = doc["totalProductPrice"];
+
+
+    
     var totalProduct = int.parse(numberOfProduct) + quant.quantity;
-    var totalProductPrice = totalProduct * int.parse(price);
+    var totalProductPrice = int.parse(previusPrice) + (quant.quantity * int.parse(price));
 
     await firebaseFirestore
         .collection("users")
@@ -131,22 +133,23 @@ class AddToCartButton extends StatelessWidget {
         });
   }
 
-Route _createRoute(String mainFoodName) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => Customize(mainFoodName: mainFoodName),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
+  Route _createRoute(String mainFoodName) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          Customize(mainFoodName: mainFoodName, mainFoodNamePrice: price),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
 
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
-}
-
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 }

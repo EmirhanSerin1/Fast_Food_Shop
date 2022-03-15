@@ -21,10 +21,9 @@ class ExtraPart extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return Center(
-              child: CircularProgressIndicator(color: Colors.black),
+              child: SizedBox(),
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            Fluttertoast.showToast(msg: "loading");
             return SizedBox();
           } else {
             return ListView.builder(

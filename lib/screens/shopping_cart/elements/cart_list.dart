@@ -37,7 +37,6 @@ class _CartItemState extends State<CartItem> {
 
   @override
   Widget build(BuildContext context) {
-    getExtrasPrice(widget.snapshot, widget.docss, widget.index);
     var totalPrice =
         int.parse(widget.price) * int.parse(widget.numberOfProduct);
     return Padding(
@@ -66,7 +65,6 @@ class _CartItemState extends State<CartItem> {
                 children: [
                   InkWell(
                     onLongPress: () {
-                      getExtraList(widget.snapshot, widget.docss, widget.index);
                       _showAlertdialog(widget.snapshot);
                     },
                     child: Padding(
@@ -176,21 +174,7 @@ class _CartItemState extends State<CartItem> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Extras'),
-        content: Container(
-          height: 75,
-          child: ListView.builder(
-            itemCount: listOfExtrasLenght,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(listOfExtras[index]["name"] +
-                    " : " +
-                    listOfExtras[index]["price"] +
-                    "\$"),
-              );
-            },
-          ),
-        ),
+        content: getExtrass(),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -264,20 +248,36 @@ class _CartItemState extends State<CartItem> {
       total += int.parse(i["price"]);
     }
 
-    return total;
+    if (extrass.isEmpty) {
+      return 0;
+    } else {
+      return total;
+    }
   }
 
-  get total => getExtrasPrice(widget.snapshot, widget.docss, widget.index);
+  int get total => getExtrasPrice(widget.snapshot, widget.docss, widget.index);
 
-  List getExtraList(
-      AsyncSnapshot snapshot, List<QueryDocumentSnapshot> docss, int index) {
-    dynamic extras = docss.map((e) => e["extras"]).toList();
-    List extrass = extras[index].values.toList();
-    print(extrass[0]["name"]);
-    return extrass;
+  getExtrass() {
+    dynamic extras = widget.docss.map((e) => e["extras"]).toList();
+    List extrass = extras[widget.index].values.toList();
+
+    if (extrass.isNotEmpty) {
+      return Container(
+        height: 70,
+        child: ListView.builder(
+          itemCount: extrass.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                extrass[index]["name"] + " : " + extrass[index]["price"] + "\$",
+              ),
+            );
+          },
+        ),
+      );
+    } else {
+      return Text("There is not any extra");
+    }
   }
-
-  get listOfExtras => getExtraList(widget.snapshot, widget.docss, widget.index);
-  int get listOfExtrasLenght =>
-      getExtraList(widget.snapshot, widget.docss, widget.index).length;
 }

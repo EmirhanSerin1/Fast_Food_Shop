@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -61,12 +62,11 @@ class _ExtraItemsState extends State<ExtraItems> {
                           color: Color(0xFFFFE3DF),
                         ),
                         child: Center(
-                          child: Image.network(
-                            widget.imagePath,
-                            height: 70,
-                            width: 70,
-                          ),
-                        ),
+                            child: CachedNetworkImage(
+                          imageUrl: widget.imagePath,
+                          height: 70,
+                          width: 70,
+                        )),
                       ),
                       SizedBox(width: 20),
                       Column(
@@ -168,6 +168,7 @@ class _ExtraItemsState extends State<ExtraItems> {
         .doc(widget.mainFoodName)
         .get();
 
+
     var previusPrice = doc["totalProductPrice"];
     var totalPrice = int.parse(previusPrice) + int.parse(widget.price);
 
@@ -176,13 +177,16 @@ class _ExtraItemsState extends State<ExtraItems> {
       "name": "${widget.foodName}",
       "price": "${widget.price}",
     };
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user?.uid)
-        .collection("singleProducts")
-        .doc(widget.mainFoodName)
-        .update(
-            {"extras": extrass, "totalProductPrice": totalPrice.toString()});
+    if (doc["extras"][widget.foodName] == null) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user?.uid)
+          .collection("singleProducts")
+          .doc(widget.mainFoodName)
+          .update(
+        {"extras": extrass, "totalProductPrice": totalPrice.toString()},
+      );
+      print(doc["extras"][widget.foodName].toString());
+    } 
   }
 }

@@ -173,7 +173,7 @@ class _ShoppingCardState extends State<ShoppingCard> {
   }
 
   _getPrice() {
-    if (productsPrice.isNotEmpty) {
+     if (productsPrice.isNotEmpty) {
       return productsPrice.reduce(
         (value, element) {
           var sum = int.parse(value) + int.parse(element);
@@ -184,4 +184,6 @@ class _ShoppingCardState extends State<ShoppingCard> {
       return "0";
     }
   }
+
+  
 }
