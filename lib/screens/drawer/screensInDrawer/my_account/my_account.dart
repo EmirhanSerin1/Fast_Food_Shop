@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_food_shop/models/user.dart';
-import 'package:fast_food_shop/screens/adress/adress_page.dart';
+import 'package:fast_food_shop/screens/adress/adress_edit.dart';
 import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +118,7 @@ class _ProfileState extends State<Profile> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildItem("Address", Icons.location_history, Adress()),
+                      _buildItem("Address", Icons.location_history, AddressEdit()),
                     ],
                   ),
                 ),

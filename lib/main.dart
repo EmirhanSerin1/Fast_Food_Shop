@@ -1,3 +1,4 @@
+import 'package:fast_food_shop/providers/address_formKey.dart';
 import 'package:fast_food_shop/providers/quantity.dart';
 import 'package:fast_food_shop/providers/search_provider.dart';
 import 'package:fast_food_shop/screens/authentication/login/login_screen.dart';
@@ -16,6 +17,9 @@ Future<void> main() async {
       ),
       ChangeNotifierProvider(
         create: (_) => SearchProvider(),
+      ),
+      Provider(
+        create: (_) => AddressTextField(),
       ),
     ],
     child: MyApp(),

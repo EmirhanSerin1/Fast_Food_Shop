@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fast_food_shop/screens/payment/payment.dart';
+import 'package:fast_food_shop/screens/adress/address.dart';
 import 'package:fast_food_shop/screens/shopping_cart/elements/cart_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -124,7 +124,7 @@ class _ShoppingCardState extends State<ShoppingCard> {
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Payment(
+                                    builder: (context) => Address(
                                         total: _getPrice().toString()))),
                             child: Container(
                               height: 40,

@@ -21,8 +21,6 @@ class SearchProvider extends ChangeNotifier {
         )
         .toList();
 
-    print(itemsList);
     notifyListeners();
-    print(newList);
   }
 }
