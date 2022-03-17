@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CreditCard extends StatefulWidget {
   const CreditCard({Key? key}) : super(key: key);
@@ -35,7 +37,6 @@ class _CreditCardState extends State<CreditCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
@@ -61,7 +62,6 @@ class _CreditCardState extends State<CreditCard> {
                 obscureCardCvv: true,
                 isHolderNameVisible: true,
                 cardBgColor: Color(0xFFFD6750),
-                
                 isSwipeGestureEnabled: true,
                 onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
                 customCardTypeIcons: <CustomCardTypeIcon>[
@@ -153,9 +153,10 @@ class _CreditCardState extends State<CreditCard> {
                         ),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            print('valid!');
+                            showAlertdialog();
                           } else {
-                            print('invalid!');
+                            Fluttertoast.showToast(
+                                msg: "Please Enter Valid Card Information ");
                           }
                         },
                       ),
@@ -166,6 +167,24 @@ class _CreditCardState extends State<CreditCard> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  showAlertdialog() {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Logout'),
+        content:
+            const Text('Are you sure you want to sign out of your account?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => MyHomePage())),
+            child: const Text('Ok'),
+          ),
+        ],
       ),
     );
   }

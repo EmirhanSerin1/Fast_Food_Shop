@@ -1,4 +1,5 @@
-import 'package:fast_food_shop/providers/address_formKey.dart';
+import 'package:fast_food_shop/providers/address_edit_provider.dart';
+import 'package:fast_food_shop/providers/address_check_provider.dart';
 import 'package:fast_food_shop/providers/quantity.dart';
 import 'package:fast_food_shop/providers/search_provider.dart';
 import 'package:fast_food_shop/screens/authentication/login/login_screen.dart';
@@ -20,6 +21,9 @@ Future<void> main() async {
       ),
       Provider(
         create: (_) => AddressTextField(),
+      ),
+      Provider(
+        create: (_) => AddressExist(),
       ),
     ],
     child: MyApp(),

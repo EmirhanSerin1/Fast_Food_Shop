@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_food_shop/models/user.dart';
-import 'package:fast_food_shop/screens/adress/adress_edit.dart';
+import 'package:fast_food_shop/screens/adress/address_profile.dart';
+import 'package:fast_food_shop/screens/adress/elements/adress_edit.dart';
 import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -89,12 +90,15 @@ class _ProfileState extends State<Profile> {
                             children: [
                               Text(
                                 // "${loggedInUser.firstName} ${loggedInUser.secondName}",
-                                FirebaseAuth.instance.currentUser?.displayName ?? "no name",
+                                FirebaseAuth
+                                        .instance.currentUser?.displayName ??
+                                    "no name",
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                FirebaseAuth.instance.currentUser?.email ?? "no email",
+                                FirebaseAuth.instance.currentUser?.email ??
+                                    "no email",
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w400),
                               ),
@@ -118,7 +122,8 @@ class _ProfileState extends State<Profile> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildItem("Address", Icons.location_history, AddressEdit()),
+                      _buildItem(
+                          "Address", Icons.location_history, AddressProfile()),
                     ],
                   ),
                 ),
@@ -134,7 +139,10 @@ class _ProfileState extends State<Profile> {
     return Padding(
       padding: EdgeInsets.all(8),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddressProfile()));
+        },
         child: Container(
           height: 50,
           width: double.infinity,

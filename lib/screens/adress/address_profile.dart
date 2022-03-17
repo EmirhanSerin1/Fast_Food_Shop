@@ -8,19 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-import '../payment/payment.dart';
 import 'elements/address_service..dart';
 
-class Address extends StatefulWidget {
-  Address({Key? key, required this.total}) : super(key: key);
+class AddressProfile extends StatefulWidget {
+  AddressProfile({Key? key}) : super(key: key);
 
-  final String total;
 
   @override
-  State<Address> createState() => _AddressState();
+  State<AddressProfile> createState() => _AddressProfileState();
 }
 
-class _AddressState extends State<Address> {
+class _AddressProfileState extends State<AddressProfile> {
   final _auth = FirebaseAuth.instance;
 
   AddressModel addressModel = AddressModel();
@@ -161,8 +159,6 @@ class _AddressState extends State<Address> {
                           flatNumberController,
                           otherController,
                           docss),
-                      // Go to Payment Page button
-                      goPaymentPage(context),
                     ],
                   ),
                 ],
@@ -174,58 +170,6 @@ class _AddressState extends State<Address> {
     );
   }
 
-  Expanded goPaymentPage(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 6.0, bottom: 4),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CreditCard(),
-              ),
-            );
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    bottomLeft: Radius.circular(16)),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 3),
-                    blurRadius: 3,
-                    spreadRadius: 2,
-                    color: Colors.red.withOpacity(0.2),
-                  ),
-                ]),
-            height: 40,
-            width: double.infinity,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Go to Payment Page",
-                      style: TextStyle(color: Colors.black, fontSize: 14),
-                    ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: Colors.black,
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 
   Expanded addNewAddress(
       GlobalKey<FormState> formKey,
@@ -275,8 +219,6 @@ class _AddressState extends State<Address> {
               } else {
                 Fluttertoast.showToast(msg: "Please Fill All Field");
               }
-              print(
-                  "************************************************up*************************************");
             }
           },
           child: Container(
