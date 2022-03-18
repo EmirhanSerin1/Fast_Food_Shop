@@ -45,65 +45,61 @@ class _CustomizeState extends State<Customize> {
     );
   }
 
-  Expanded buildDontWantMethod(User? user, Quantity quant, BuildContext context) {
+  buildDontWantMethod(User? user, Quantity quant, BuildContext context) {
     return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: InkWell(
-                        onTap: () {
-                          _deleteExtras(user, quant);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyHomePage()));
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                    offset: Offset(0, 3),
-                                    color: Colors.grey.withOpacity(0.3),
-                                    blurRadius: 3)
-                              ]),
-                          child: Center(
-                            child: Text("I don't want"),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: InkWell(
+          onTap: () {
+            _deleteExtras(user, quant);
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => MyHomePage()));
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 3),
+                      color: Colors.grey.withOpacity(0.3),
+                      blurRadius: 3)
+                ]),
+            child: Center(
+              child: Text("I don't want"),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
-  Expanded buildAddedMethod(BuildContext context) {
+  buildAddedMethod(BuildContext context) {
     return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: InkWell(
-                        onTap: (() {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyHomePage()));
-                        }),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                    offset: Offset(0, 3),
-                                    color: Colors.grey.withOpacity(0.3),
-                                    blurRadius: 3)
-                              ]),
-                          child: Center(
-                            child: Text("Ok I Added"),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: InkWell(
+          onTap: (() {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => MyHomePage()));
+          }),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 3),
+                      color: Colors.grey.withOpacity(0.3),
+                      blurRadius: 3)
+                ]),
+            child: Center(
+              child: Text("Ok I Added"),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> _deleteExtras(User? user, Quantity quant) async {
@@ -116,8 +112,8 @@ class _CustomizeState extends State<Customize> {
 
     var numberOfProduct = doc["numberOfProduct"];
 
-    var productPrice = int.parse(numberOfProduct) * int.parse(widget.mainFoodNamePrice);
-
+    var productPrice =
+        int.parse(numberOfProduct) * int.parse(widget.mainFoodNamePrice);
 
     await FirebaseFirestore.instance
         .collection('users')

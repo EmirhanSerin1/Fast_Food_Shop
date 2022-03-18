@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
 import 'package:fast_food_shop/models/user.dart';
 import 'package:fast_food_shop/screens/adress/address_profile.dart';
 import 'package:fast_food_shop/screens/adress/elements/adress_edit.dart';
@@ -58,26 +59,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   Column(
                     children: [
-                      Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              blurRadius: 5,
-                              spreadRadius: 3,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                          color: Color(0xFFDBF0FF),
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage("assets/user/person.png"),
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
+                      BuildProfilPhoto(100, 100, Profile()),
                       Padding(
                         padding: EdgeInsets.all(8),
                         child: Container(

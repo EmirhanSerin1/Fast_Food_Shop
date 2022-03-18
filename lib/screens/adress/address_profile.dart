@@ -45,7 +45,7 @@ class _AddressProfileState extends State<AddressProfile> {
         Provider.of<AddressTextField>(context, listen: false).otherController;
     //for check
     List<QueryDocumentSnapshot> docss =
-        Provider.of<AddressExist>(context, listen: false).doc;
+        Provider.of<AddressCheck>(context, listen: false).doc;
     User? user = _auth.currentUser;
     return Scaffold(
       appBar: AppBar(

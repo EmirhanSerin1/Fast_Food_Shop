@@ -47,7 +47,7 @@ class _AddressState extends State<Address> {
         Provider.of<AddressTextField>(context, listen: false).otherController;
     //for check
     List<QueryDocumentSnapshot> docss =
-        Provider.of<AddressExist>(context, listen: false).doc;
+        Provider.of<AddressCheck>(context, listen: false).doc;
     User? user = _auth.currentUser;
     return Scaffold(
       appBar: AppBar(
@@ -162,7 +162,7 @@ class _AddressState extends State<Address> {
                           otherController,
                           docss),
                       // Go to Payment Page button
-                      goPaymentPage(context),
+                      goPaymentPage(context, widget.total),
                     ],
                   ),
                 ],
@@ -174,7 +174,7 @@ class _AddressState extends State<Address> {
     );
   }
 
-  Expanded goPaymentPage(BuildContext context) {
+  Expanded goPaymentPage(BuildContext context, var total) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(left: 6.0, bottom: 4),
@@ -183,7 +183,7 @@ class _AddressState extends State<Address> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CreditCard(),
+                builder: (context) => CreditCard(total: total,),
               ),
             );
           },

@@ -1,13 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fast_food_shop/models/order_model.dart';
+import 'package:fast_food_shop/models/user.dart';
+import 'package:fast_food_shop/providers/auth_provider.dart';
 import 'package:fast_food_shop/screens/home/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class CreditCard extends StatefulWidget {
-  const CreditCard({Key? key}) : super(key: key);
+  const CreditCard({Key? key, required this.total}) : super(key: key);
 
+  final total;
   @override
   State<CreditCard> createState() => _CreditCardState();
 }
@@ -36,6 +43,8 @@ class _CreditCardState extends State<CreditCard> {
 
   @override
   Widget build(BuildContext context) {
+    UserModel user = Provider.of<Auth>(context, listen: false).user;
+    AsyncSnapshot snapshotGeneral = AsyncSnapshot.waiting();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -139,24 +148,34 @@ class _CreditCardState extends State<CreditCard> {
                           ),
                           primary: Color(0xFFFD6750),
                         ),
-                        child: Container(
-                          margin: const EdgeInsets.all(12),
-                          child: const Text(
-                            'Validate',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'halter',
-                              fontSize: 14,
-                              package: 'flutter_credit_card',
-                            ),
-                          ),
-                        ),
+                        child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection("users")
+                                .doc(user.uid)
+                                .collection("singleProducts")
+                                .snapshots(),
+                            builder: (context, AsyncSnapshot snapshot) {
+                              snapshotGeneral = snapshot;
+                              return Container(
+                                margin: const EdgeInsets.all(12),
+                                child: const Text(
+                                  'Validate',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'halter',
+                                    fontSize: 14,
+                                    package: 'flutter_credit_card',
+                                  ),
+                                ),
+                              );
+                            }),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            showAlertdialog();
+                            showAlertdialog(user, snapshotGeneral);
+                            // print(name);
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please Enter Valid Card Information ");
+                                msg: "Please enter valid cart number");
                           }
                         },
                       ),
@@ -171,22 +190,63 @@ class _CreditCardState extends State<CreditCard> {
     );
   }
 
-  showAlertdialog() {
+  showAlertdialog(UserModel user, AsyncSnapshot snapshot) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Logout'),
-        content:
-            const Text('Are you sure you want to sign out of your account?'),
+        title: const Text('Order Check'),
+        content: const Text(
+            'Your order in our page now. We are sending as soon as possible'),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => MyHomePage())),
+            onPressed: () {
+              _sendOrderToFirebase(user, snapshot);
+            },
             child: const Text('Ok'),
           ),
         ],
       ),
     );
+  }
+
+  _sendOrderToFirebase(UserModel user, AsyncSnapshot snapshot) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    Order order = Order();
+    DateTime now = DateTime.now();
+    String time = now.hour.toString() +
+        "." +
+        now.minute.toString() +
+        " " +
+        now.day.toString() +
+        "/" +
+        now.month.toString() +
+        "/" +
+        now.year.toString();
+
+    Map orderSik = {};
+
+    for (var i = 0; i < snapshot.data.docs.length; i++) {
+      DocumentSnapshot ds = snapshot.data.docs[i];
+      // dynamic sil =  ds["extras"][1];
+      orderSik[(i + 1).toString()] = {
+        "name": ds["productName"],
+        "numberOfproduct": ds["numberOfProduct"],
+        "extras": ds["extras"],
+      };
+    }
+
+    order.orderDate = time;
+    order.totalPrice = widget.total;
+    order.orders = orderSik;
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .collection("orders")
+        .add(order.toMap())
+        .then((value) => _clearProducts(user))
+        .then((value) => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MyHomePage())));
   }
 
   void onCreditCardModelChange(CreditCardModel? creditCardModel) {
@@ -197,5 +257,16 @@ class _CreditCardState extends State<CreditCard> {
       cvvCode = creditCardModel.cvvCode;
       isCvvFocused = creditCardModel.isCvvFocused;
     });
+  }
+
+  _clearProducts(UserModel user) async {
+    var collection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection("singleProducts");
+    var snapshots = await collection.get();
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
   }
 }

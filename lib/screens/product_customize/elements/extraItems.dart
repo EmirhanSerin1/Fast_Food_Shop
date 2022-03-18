@@ -186,7 +186,6 @@ class _ExtraItemsState extends State<ExtraItems> {
           .update(
         {"extras": extrass, "totalProductPrice": totalPrice.toString()},
       );
-      print(doc["extras"][widget.foodName].toString());
     } 
   }
 }

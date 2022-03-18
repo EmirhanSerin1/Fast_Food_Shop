@@ -1,5 +1,4 @@
 import 'package:fast_food_shop/providers/address_edit_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,11 +10,9 @@ class AddressEdit extends StatefulWidget {
 }
 
 class _AddressEditState extends State<AddressEdit> {
-  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    User? user = _auth.currentUser;
     final _formKey =
         Provider.of<AddressTextField>(context, listen: false).formKey;
     final cityController =  Provider.of<AddressTextField>(context, listen: false).cityController;

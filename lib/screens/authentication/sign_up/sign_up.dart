@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+enum SingingCharacter { male, female }
+
 class SingUpScreen extends StatefulWidget {
   SingUpScreen({Key? key}) : super(key: key);
 
@@ -24,6 +26,10 @@ class _SingUpScreenState extends State<SingUpScreen> {
   final confirmPasswordController = new TextEditingController();
 
   final EdgeInsetsGeometry padding = const EdgeInsets.fromLTRB(16, 4, 16, 4);
+
+  SingingCharacter? _character = SingingCharacter.male;
+  String male = "Male";
+  String female = "Female";
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +56,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   emailSingUpField(),
                   passwordSingUpField(),
                   confirmPasswordSingUpField(),
+                  maleFemaleRadio(),
                   signUpButton(),
                 ],
               ),
@@ -57,6 +64,64 @@ class _SingUpScreenState extends State<SingUpScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  maleFemaleRadio() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            height: 40,
+            width: 100,
+            child: Center(
+              child: Row(
+                children: [
+                  Text('Male'),
+                  Radio<SingingCharacter>(
+                    value: SingingCharacter.male,
+                    groupValue: _character,
+                    onChanged: (SingingCharacter? value) {
+                      setState(() {
+                        _character = value;
+                      });
+                      print(_character.toString());
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 40,
+            width: 100,
+            child: Row(
+              children: [
+                Text('Female'),
+                Radio<SingingCharacter>(
+                  value: SingingCharacter.female,
+                  groupValue: _character,
+                  onChanged: (SingingCharacter? value) {
+                    setState(() {
+                      _character = value;
+                    });
+                    print(_character.toString());
+                  },
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 
@@ -254,8 +319,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
               secondNameController.text.trim(),
         );
 
-      await userCredential.user?.updatePhotoURL("https://randomuser.me/api/portraits/men/75.jpg");
-  
+        await userCredential.user
+            ?.updatePhotoURL("https://randomuser.me/api/portraits/men/75.jpg");
+
         await sendDetailsToFirestore();
       } on Exception catch (e) {
         Fluttertoast.showToast(msg: e.toString());
@@ -273,11 +339,19 @@ class _SingUpScreenState extends State<SingUpScreen> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
     UserModel userModel = UserModel();
+    String sex = "";
+
+    if(_character == SingingCharacter.male){
+      sex = male;
+    } else{
+      sex = female;
+    }
 
     userModel.uid = user!.uid;
     userModel.email = user.email;
     userModel.firstName = firstNameController.text;
     userModel.secondName = secondNameController.text;
+    userModel.sex = sex;
 
     await firebaseFirestore
         .collection("users")

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:fast_food_shop/screens/my_account/my_account.dart';
+import 'package:fast_food_shop/screens/order_history/order_history.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -7,8 +9,7 @@ import '../../core/profiile_photo/profil_photo.dart';
 import '../../models/user.dart';
 import '../authentication/login/login_screen.dart';
 import '../shopping_cart/shopping_cart.dart';
-import 'screensInDrawer/my_account/my_account.dart';
-import 'screensInDrawer/settings/settings.dart';
+import '../settings.dart';
 
 class Drawerr extends StatefulWidget {
   @override
@@ -69,6 +70,8 @@ class _DrawerrState extends State<Drawerr> {
                       "My Account", Icons.account_circle, Profile(), context),
                   buildMenuItem("Shopping Cart", Icons.shopping_cart_outlined,
                       ShoppingCard(), context),
+                  buildMenuItem("Order History", Icons.shopping_cart_outlined,
+                      OrderHistory(), context),
                   Divider(),
                   buildMenuItem(
                       "Settings", Icons.settings, Settings(), context),
@@ -92,7 +95,7 @@ class _DrawerrState extends State<Drawerr> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: buildProfilPhoto(75, 75, Profile(), context),
+                  child: BuildProfilPhoto(75, 75, Profile()),
                 ),
                 SizedBox(width: 10),
                 Column(
@@ -197,7 +200,8 @@ class _DrawerrState extends State<Drawerr> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Logout'),
-        content: const Text('Are you sure you want to sign out of your account?'),
+        content:
+            const Text('Are you sure you want to sign out of your account?'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -210,7 +214,6 @@ class _DrawerrState extends State<Drawerr> {
         ],
       ),
     );
-    
   }
 
   Future<void> logout(BuildContext context) async {
@@ -218,7 +221,6 @@ class _DrawerrState extends State<Drawerr> {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => LoginScreen())));
   }
-
 
   get fullName => SizedBox(
         width: MediaQuery.of(context).size.width * 0.5,

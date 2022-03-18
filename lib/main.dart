@@ -1,7 +1,9 @@
 import 'package:fast_food_shop/providers/address_edit_provider.dart';
 import 'package:fast_food_shop/providers/address_check_provider.dart';
+import 'package:fast_food_shop/providers/auth_provider.dart';
 import 'package:fast_food_shop/providers/quantity.dart';
 import 'package:fast_food_shop/providers/search_provider.dart';
+import 'package:fast_food_shop/providers/sex_check_provider.dart';
 import 'package:fast_food_shop/screens/authentication/login/login_screen.dart';
 import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +16,9 @@ Future<void> main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
+        create: (_) => Auth(),
+      ),
+      ChangeNotifierProvider(
         create: (_) => Quantity(),
       ),
       ChangeNotifierProvider(
@@ -23,7 +28,10 @@ Future<void> main() async {
         create: (_) => AddressTextField(),
       ),
       Provider(
-        create: (_) => AddressExist(),
+        create: (_) => AddressCheck(),
+      ),
+      Provider(
+        create: (_) => SexCheck(),
       ),
     ],
     child: MyApp(),
@@ -48,7 +56,12 @@ class MyApp extends StatelessWidget {
               child: CircularProgressIndicator(),
             ));
           if (snapshot.hasData) {
-            return MyHomePage();
+            return FutureBuilder(
+              future: Provider.of<Auth>(context, listen: false).getUser(),
+              builder: (context, snapshot) {
+                return MyHomePage();
+              }
+            );
           } else {
             return LoginScreen();
           }

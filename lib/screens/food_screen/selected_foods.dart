@@ -46,7 +46,6 @@ class _SellectedFoodState extends State<SellectedFood> {
                   ProductQuantity(
                       price: widget.price, foodName: widget.foodName),
                   details(),
-                  // I will put here product details
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     child: Container(
