@@ -4,7 +4,6 @@ import 'package:fast_food_shop/models/order_model.dart';
 import 'package:fast_food_shop/models/user.dart';
 import 'package:fast_food_shop/providers/auth_provider.dart';
 import 'package:fast_food_shop/screens/home/home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
@@ -12,9 +11,28 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class CreditCard extends StatefulWidget {
-  const CreditCard({Key? key, required this.total}) : super(key: key);
+  const CreditCard({
+    Key? key,
+    required this.total,
+    required this.country,
+    required this.city,
+    required this.district,
+    required this.street,
+    required this.buildingNumber,
+    required this.flatNumber,
+    required this.other,
+  }) : super(key: key);
 
   final total;
+
+  final String country,
+      city,
+      district,
+      street,
+      buildingNumber,
+      flatNumber,
+      other;
+
   @override
   State<CreditCard> createState() => _CreditCardState();
 }
@@ -227,17 +245,31 @@ class _CreditCardState extends State<CreditCard> {
 
     for (var i = 0; i < snapshot.data.docs.length; i++) {
       DocumentSnapshot ds = snapshot.data.docs[i];
-      // dynamic sil =  ds["extras"][1];
       orderSik[(i + 1).toString()] = {
         "name": ds["productName"],
         "numberOfproduct": ds["numberOfProduct"],
         "extras": ds["extras"],
       };
     }
+    String address = "Country: " +
+        widget.country +
+        ", City: " +
+        widget.city +
+        ", District: " +
+        widget.district +
+        ", Street: " +
+        widget.street +
+        ", BuildingNumber: " +
+        widget.buildingNumber +
+        ", FlatNumber: " +
+        widget.flatNumber +
+        ", Other: " +
+        widget.other;
 
     order.orderDate = time;
     order.totalPrice = widget.total;
     order.orders = orderSik;
+    order.address = address;
 
     await firebaseFirestore
         .collection("users")

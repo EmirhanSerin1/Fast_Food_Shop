@@ -1,3 +1,6 @@
+import 'package:fast_food_shop/screens/my_account/my_account.dart';
+import 'package:fast_food_shop/screens/social_media_account/social_media_accounts.dart';
+import 'package:fast_food_shop/screens/who_am_I/who_am_I.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -60,16 +63,16 @@ class _MyHomePageState extends State<MyHomePage>
                       _buildSpecialButtons(
                           context, Colors.red, "Shopping Cart", ShoppingCard()),
                       _buildSpecialButtons(
-                          context, Colors.orange, "Who Am I", ShoppingCard()),
+                          context, Colors.orange, "Who Am I", WhoAmI()),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       _buildSpecialButtons(context, Colors.purple,
-                          "Social Media Account", ShoppingCard()),
+                          "Social Media Account", SocialMediaAccounts()),
                       _buildSpecialButtons(
-                          context, Colors.green, "Profile", ShoppingCard()),
+                          context, Colors.green, "Profile", Profile()),
                     ],
                   ),
                 ],

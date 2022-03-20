@@ -18,6 +18,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     UserModel user = Provider.of<Auth>(context, listen: false).user;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -33,13 +34,20 @@ class _OrderHistoryState extends State<OrderHistory> {
               return CircularProgressIndicator();
             } else {
               return ListView.builder(
-                  itemCount: _getLength(snapshot),
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot ds = snapshot.data.docs[index];
-                    return OrderItem(
-                      totalPrice: ds["totalPrice"],
-                    );
-                  });
+                itemCount: _getLength(snapshot),
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds = snapshot.data.docs[index];
+                  return OrderItem(
+                    totalPrice: ds["totalPrice"],
+                    orderDate: ds["orderDate"],
+                    orders: ds["orders"],
+                    address: ds["address"],
+                    snapshot: snapshot,
+                    index: index,
+                    docs: snapshot.data.docs,
+                  );
+                },
+              );
             }
           }),
     );

@@ -1,6 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
 
-class AddressCheck {
-  // We are checking doc
-  List<QueryDocumentSnapshot> doc = [];
+class AddressCheck extends ChangeNotifier{
+  bool doc = false;
+
+  changeToTrue() {
+    doc = true;
+    notifyListeners();
+  }
+
+  changeToFalse() {
+    doc = false;
+    notifyListeners();
+  }
 }

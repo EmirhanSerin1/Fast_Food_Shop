@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fast_food_shop/models/address_model.dart';
-import 'package:fast_food_shop/providers/address_edit_provider.dart';
-import 'package:fast_food_shop/providers/address_check_provider.dart';
-import 'package:fast_food_shop/screens/adress/elements/adress_edit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/address_model.dart';
+import '../../providers/address_edit_provider.dart';
 import '../payment/payment.dart';
 import 'elements/address_service..dart';
+import 'elements/adress_edit.dart';
 
 class Address extends StatefulWidget {
   Address({Key? key, required this.total}) : super(key: key);
@@ -45,10 +44,15 @@ class _AddressState extends State<Address> {
             .flatNumberController;
     final otherController =
         Provider.of<AddressTextField>(context, listen: false).otherController;
-    //for check
-    List<QueryDocumentSnapshot> docss =
-        Provider.of<AddressCheck>(context, listen: false).doc;
+
+    // final docYa = Provider.of<AddressCheck>(context, listen: false).doc;
+    // var changeToTrue = Provider.of<AddressCheck>(context, listen: false).changeToTrue();
+    // var changeToFalse = Provider.of<AddressCheck>(context, listen: false).changeToFalse();
+
     User? user = _auth.currentUser;
+
+    AddressModel addressForSendPayment = AddressModel();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -103,14 +107,25 @@ class _AddressState extends State<Address> {
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (!snapshot.hasData) {
-                              return CircularProgressIndicator();
+                              return buildEmptyAddress();
                             } else if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return SizedBox();
                             } else {
-                              docss = snapshot.data.docs;
-                              if (docss.isNotEmpty) {
+                              List<QueryDocumentSnapshot> doc =
+                                  snapshot.data.docs;
+
+                              if (doc.isNotEmpty) {
                                 DocumentSnapshot ds = snapshot.data.docs[0];
+                                addressForSendPayment.country = ds["country"];
+                                addressForSendPayment.city = ds["city"];
+                                addressForSendPayment.street = ds["street"];
+                                addressForSendPayment.district = ds["district"];
+                                addressForSendPayment.buildingNumber =
+                                    ds["buildingNumber"];
+                                addressForSendPayment.flatNumber =
+                                    ds["flatNumber"];
+                                addressForSendPayment.other = ds["other"];
                                 return buildAddress(
                                   ds["country"],
                                   ds["city"],
@@ -151,18 +166,19 @@ class _AddressState extends State<Address> {
                     children: [
                       // Add New Address button
                       addNewAddress(
-                          formKey,
-                          user,
-                          countryController,
-                          cityController,
-                          districtController,
-                          streetController,
-                          buildingNumberController,
-                          flatNumberController,
-                          otherController,
-                          docss),
+                        formKey,
+                        user,
+                        countryController,
+                        cityController,
+                        districtController,
+                        streetController,
+                        buildingNumberController,
+                        flatNumberController,
+                        otherController,
+                      ),
                       // Go to Payment Page button
-                      goPaymentPage(context, widget.total),
+                      goPaymentPage(
+                          context, widget.total, addressForSendPayment),
                     ],
                   ),
                 ],
@@ -174,57 +190,86 @@ class _AddressState extends State<Address> {
     );
   }
 
-  Expanded goPaymentPage(BuildContext context, var total) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 6.0, bottom: 4),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CreditCard(total: total,),
-              ),
-            );
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    bottomLeft: Radius.circular(16)),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 3),
-                    blurRadius: 3,
-                    spreadRadius: 2,
-                    color: Colors.red.withOpacity(0.2),
-                  ),
-                ]),
-            height: 40,
-            width: double.infinity,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Go to Payment Page",
-                      style: TextStyle(color: Colors.black, fontSize: 14),
+  goPaymentPage(
+      BuildContext context, var total, AddressModel addressForSendPayment) {
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection("users")
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection("address")
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else {
+            List<QueryDocumentSnapshot> doc = snapshot.data.docs;
+            return Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 6.0, bottom: 4),
+                child: InkWell(
+                  onTap: () {
+                    if (doc.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreditCard(
+                            total: total,
+                            country: addressForSendPayment.country!,
+                            city: addressForSendPayment.city!,
+                            district: addressForSendPayment.district!,
+                            street: addressForSendPayment.street!,
+                            buildingNumber:
+                                addressForSendPayment.buildingNumber!,
+                            flatNumber: addressForSendPayment.flatNumber!,
+                            other: addressForSendPayment.other!,
+                          ),
+                        ),
+                      );
+                    } else {
+                      showAlertdialog();
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            bottomLeft: Radius.circular(16)),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 3),
+                            blurRadius: 3,
+                            spreadRadius: 2,
+                            color: Colors.red.withOpacity(0.2),
+                          ),
+                        ]),
+                    height: 40,
+                    width: double.infinity,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Go to Payment Page",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 14),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Colors.black,
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: Colors.black,
-                  )
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
-    );
+            );
+          }
+        });
   }
 
   Expanded addNewAddress(
@@ -236,47 +281,26 @@ class _AddressState extends State<Address> {
       TextEditingController streetController,
       TextEditingController buildingNumberController,
       TextEditingController flatNumberController,
-      TextEditingController otherController,
-      List<QueryDocumentSnapshot> docs) {
+      TextEditingController otherController) {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(right: 6, bottom: 4),
         child: InkWell(
           onTap: () {
-            if (docs.isEmpty) {
-              if (formKey.currentState!.validate()) {
-                sendAddresstoFirestore(
-                  user,
-                  addressModel,
-                  countryController,
-                  cityController,
-                  districtController,
-                  streetController,
-                  buildingNumberController,
-                  flatNumberController,
-                  otherController,
-                );
-              } else {
-                Fluttertoast.showToast(msg: "Please Fill All Field");
-              }
+            if (formKey.currentState!.validate()) {
+              sendAddresstoFirestore(
+                user,
+                addressModel,
+                countryController,
+                cityController,
+                districtController,
+                streetController,
+                buildingNumberController,
+                flatNumberController,
+                otherController,
+              );
             } else {
-              if (formKey.currentState!.validate()) {
-                upgradeAddress(
-                  user,
-                  addressModel,
-                  countryController,
-                  cityController,
-                  districtController,
-                  streetController,
-                  buildingNumberController,
-                  flatNumberController,
-                  otherController,
-                );
-              } else {
-                Fluttertoast.showToast(msg: "Please Fill All Field");
-              }
-              print(
-                  "************************************************up*************************************");
+              Fluttertoast.showToast(msg: "Please Fill All Field");
             }
           },
           child: Container(
@@ -315,6 +339,24 @@ class _AddressState extends State<Address> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  showAlertdialog() {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('!!!'),
+        content: const Text('First please add address'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Ok'),
+          ),
+        ],
       ),
     );
   }

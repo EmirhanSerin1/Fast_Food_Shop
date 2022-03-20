@@ -2,13 +2,13 @@ class Order {
   String? orderDate;
   String? totalPrice;
   Map? orders;
- 
-
+  String? address;
 
   Order({
     this.orderDate,
     this.totalPrice,
-    this.orders
+    this.orders,
+    this.address,
   });
 
   //For send data
@@ -16,8 +16,8 @@ class Order {
     return {
       'orderDate': orderDate,
       'totalPrice': totalPrice,
-      'orders' : orders,
+      'orders': orders,
+      'address': address,
     };
   }
-
 }

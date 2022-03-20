@@ -9,7 +9,7 @@ import '../../core/profiile_photo/profil_photo.dart';
 import '../../models/user.dart';
 import '../authentication/login/login_screen.dart';
 import '../shopping_cart/shopping_cart.dart';
-import '../settings.dart';
+import '../settings/settings.dart';
 
 class Drawerr extends StatefulWidget {
   @override

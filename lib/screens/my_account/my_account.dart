@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fast_food_shop/core/profiile_photo/profil_photo.dart';
-import 'package:fast_food_shop/models/user.dart';
-import 'package:fast_food_shop/screens/adress/address_profile.dart';
-import 'package:fast_food_shop/screens/adress/elements/adress_edit.dart';
-import 'package:fast_food_shop/screens/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/profiile_photo/profil_photo.dart';
+import '../../models/user.dart';
+import '../adress/address_profile.dart';
+import '../home/home.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);

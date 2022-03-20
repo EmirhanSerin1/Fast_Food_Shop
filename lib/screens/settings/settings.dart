@@ -12,7 +12,9 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(),
+      body: Center(
+        child: Text("I am still developing"),
+      ),
       
     );
   }

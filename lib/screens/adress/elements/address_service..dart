@@ -64,14 +64,15 @@ upgradeAddress(
         .collection("address")
         .doc("address")
         .update({
-          "countryController": countryController,
-          "cityController": cityController,
-          "districtController": districtController,
-          "streetController": streetController,
-          "buildingNumberController": buildingNumberController,
-          "flatNumberController": flatNumberController,
-          "otherController": otherController,
+          "country": countryController,
+          "city": cityController,
+          "district": districtController,
+          "street": streetController,
+          "buildingNumber": buildingNumberController,
+          "flatNumber": flatNumberController,
+          "other": otherController,
         })
+        .catchError((error) => Fluttertoast.showToast(msg: "stg went wrong"))
         .then((value) => Fluttertoast.showToast(msg: "Address Updated"))
         .then((value) => controllerClear(
             countryController,

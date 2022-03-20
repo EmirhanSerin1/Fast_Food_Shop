@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_food_shop/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class Auth extends ChangeNotifier {
@@ -12,13 +11,11 @@ class Auth extends ChangeNotifier {
   }
 
   getUser() async {
-    print("ok");
     DocumentSnapshot doc = await FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .get();
 
-    print(doc["email"]);
     _user = UserModel(
       email: doc["email"],
       firstName: doc["firstName"],

@@ -1,18 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fast_food_shop/models/address_model.dart';
-import 'package:fast_food_shop/providers/address_edit_provider.dart';
-import 'package:fast_food_shop/providers/address_check_provider.dart';
-import 'package:fast_food_shop/screens/adress/elements/adress_edit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/address_model.dart';
+import '../../providers/address_edit_provider.dart';
 import 'elements/address_service..dart';
+import 'elements/adress_edit.dart';
 
 class AddressProfile extends StatefulWidget {
   AddressProfile({Key? key}) : super(key: key);
-
 
   @override
   State<AddressProfile> createState() => _AddressProfileState();
@@ -44,8 +42,7 @@ class _AddressProfileState extends State<AddressProfile> {
     final otherController =
         Provider.of<AddressTextField>(context, listen: false).otherController;
     //for check
-    List<QueryDocumentSnapshot> docss =
-        Provider.of<AddressCheck>(context, listen: false).doc;
+
     User? user = _auth.currentUser;
     return Scaffold(
       appBar: AppBar(
@@ -106,7 +103,8 @@ class _AddressProfileState extends State<AddressProfile> {
                                 ConnectionState.waiting) {
                               return SizedBox();
                             } else {
-                              docss = snapshot.data.docs;
+                              List<QueryDocumentSnapshot> docss =
+                                  snapshot.data.docs;
                               if (docss.isNotEmpty) {
                                 DocumentSnapshot ds = snapshot.data.docs[0];
                                 return buildAddress(
@@ -149,16 +147,16 @@ class _AddressProfileState extends State<AddressProfile> {
                     children: [
                       // Add New Address button
                       addNewAddress(
-                          formKey,
-                          user,
-                          countryController,
-                          cityController,
-                          districtController,
-                          streetController,
-                          buildingNumberController,
-                          flatNumberController,
-                          otherController,
-                          docss),
+                        formKey,
+                        user,
+                        countryController,
+                        cityController,
+                        districtController,
+                        streetController,
+                        buildingNumberController,
+                        flatNumberController,
+                        otherController,
+                      ),
                     ],
                   ),
                 ],
@@ -170,55 +168,36 @@ class _AddressProfileState extends State<AddressProfile> {
     );
   }
 
-
   Expanded addNewAddress(
-      GlobalKey<FormState> formKey,
-      User? user,
-      TextEditingController countryController,
-      TextEditingController cityController,
-      TextEditingController districtController,
-      TextEditingController streetController,
-      TextEditingController buildingNumberController,
-      TextEditingController flatNumberController,
-      TextEditingController otherController,
-      List<QueryDocumentSnapshot> docs) {
+    GlobalKey<FormState> formKey,
+    User? user,
+    TextEditingController countryController,
+    TextEditingController cityController,
+    TextEditingController districtController,
+    TextEditingController streetController,
+    TextEditingController buildingNumberController,
+    TextEditingController flatNumberController,
+    TextEditingController otherController,
+  ) {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(right: 6, bottom: 4),
         child: InkWell(
           onTap: () {
-            if (docs.isEmpty) {
-              if (formKey.currentState!.validate()) {
-                sendAddresstoFirestore(
-                  user,
-                  addressModel,
-                  countryController,
-                  cityController,
-                  districtController,
-                  streetController,
-                  buildingNumberController,
-                  flatNumberController,
-                  otherController,
-                );
-              } else {
-                Fluttertoast.showToast(msg: "Please Fill All Field");
-              }
+            if (formKey.currentState!.validate()) {
+              sendAddresstoFirestore(
+                user,
+                addressModel,
+                countryController,
+                cityController,
+                districtController,
+                streetController,
+                buildingNumberController,
+                flatNumberController,
+                otherController,
+              );
             } else {
-              if (formKey.currentState!.validate()) {
-                upgradeAddress(
-                  user,
-                  addressModel,
-                  countryController,
-                  cityController,
-                  districtController,
-                  streetController,
-                  buildingNumberController,
-                  flatNumberController,
-                  otherController,
-                );
-              } else {
-                Fluttertoast.showToast(msg: "Please Fill All Field");
-              }
+              Fluttertoast.showToast(msg: "Please Fill All Field");
             }
           },
           child: Container(

@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -22,13 +23,16 @@ Future<void> main() async {
         create: (_) => Quantity(),
       ),
       ChangeNotifierProvider(
+        create: (_) => AddressCheck(),
+      ),
+      ChangeNotifierProvider(
         create: (_) => SearchProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => Auth(),
       ),
       Provider(
         create: (_) => AddressTextField(),
-      ),
-      Provider(
-        create: (_) => AddressCheck(),
       ),
       Provider(
         create: (_) => SexCheck(),
@@ -44,9 +48,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Crazy Fast Food',
-      theme: ThemeData(
-        primarySwatch: Colors.red
-      ),
+      theme: ThemeData(primarySwatch: Colors.red),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -57,11 +59,10 @@ class MyApp extends StatelessWidget {
             ));
           if (snapshot.hasData) {
             return FutureBuilder(
-              future: Provider.of<Auth>(context, listen: false).getUser(),
-              builder: (context, snapshot) {
-                return MyHomePage();
-              }
-            );
+                future: Provider.of<Auth>(context, listen: false).getUser(),
+                builder: (context, snapshot) {
+                  return MyHomePage();
+                });
           } else {
             return LoginScreen();
           }
