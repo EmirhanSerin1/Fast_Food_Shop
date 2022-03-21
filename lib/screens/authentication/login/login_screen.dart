@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width / 2,
           onPressed: () {
-            signIn(emailController.text, passwordController.text);
+            signIn(emailController.text.trim(), passwordController.text);
           },
           child: Text(
             "Login",
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
           }
           if (!RegExp(
                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-              .hasMatch(value)) {
+              .hasMatch(emailController.text)) {
             return "Please Enter a Valid Email";
           }
           return null;

@@ -157,7 +157,7 @@ class _OrderItemState extends State<OrderItem> {
                       " x" +
                       ordersList[index]["numberOfproduct"].toString(),
                 ),
-                Text(getExtras(), style: TextStyle(color: Colors.grey)),
+                Text(getExtras(index), style: TextStyle(color: Colors.grey)),
               ],
             ),
           );
@@ -166,11 +166,11 @@ class _OrderItemState extends State<OrderItem> {
     );
   }
 
-  getExtras() {
+  getExtras(var indexPro) {
     dynamic orderStart = widget.docs.map((e) => e["orders"]).toList();
     List ordersList = orderStart[widget.index].values.toList();
 
-    dynamic extras = ordersList[0]["extras"];
+    dynamic extras = ordersList[indexPro]["extras"];
 
     dynamic extrass = extras.values;
 

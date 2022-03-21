@@ -74,7 +74,9 @@ class AppBarForSelectedFood extends StatelessWidget {
                         .collection("singleProducts")
                         .snapshots(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
+                      if(!snapshot.hasData){
+                        return CircularProgressIndicator();
+                      }else if (snapshot.connectionState == ConnectionState.waiting) {
                         return CircularProgressIndicator();
                       } else {
                         return Text(
