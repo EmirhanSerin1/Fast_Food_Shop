@@ -45,10 +45,7 @@ class _AddressState extends State<Address> {
     final otherController =
         Provider.of<AddressTextField>(context, listen: false).otherController;
 
-    // final docYa = Provider.of<AddressCheck>(context, listen: false).doc;
-    // var changeToTrue = Provider.of<AddressCheck>(context, listen: false).changeToTrue();
-    // var changeToFalse = Provider.of<AddressCheck>(context, listen: false).changeToFalse();
-
+   
     User? user = _auth.currentUser;
 
     AddressModel addressForSendPayment = AddressModel();

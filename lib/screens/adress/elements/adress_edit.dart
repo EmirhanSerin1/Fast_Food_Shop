@@ -123,7 +123,7 @@ class _AddressEditState extends State<AddressEdit> {
             autofocus: false,
             controller: controller,
             textInputAction: TextInputAction.done,
-            maxLength: 16,
+            maxLength: 50,
             keyboardType: keyboardType,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(12, 15, 15, 11),
