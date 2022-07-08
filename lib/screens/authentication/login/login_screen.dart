@@ -1,5 +1,6 @@
 import 'package:fast_food_shop/screens/authentication/sign_up/sign_up.dart';
 import 'package:fast_food_shop/screens/home/home.dart';
+import 'package:fast_food_shop/screens/loading/loading_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -61,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width / 2,
           onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> Loading()));
             signIn(emailController.text.trim(), passwordController.text);
           },
           child: Text(

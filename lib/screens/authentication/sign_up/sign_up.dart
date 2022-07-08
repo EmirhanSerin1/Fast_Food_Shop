@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_food_shop/models/user.dart';
 import 'package:fast_food_shop/screens/authentication/login/login_screen.dart';
+import 'package:fast_food_shop/screens/loading/loading_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -295,6 +296,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> Loading()));
             signUP(emailController.text, passwordController.text);
           },
           child: Text(

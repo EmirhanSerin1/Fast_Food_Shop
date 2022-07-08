@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fast_food_shop/models/user.dart';
-import 'package:fast_food_shop/providers/auth_provider.dart';
 import 'package:fast_food_shop/screens/order_history/elements/order_item.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class OrderHistory extends StatefulWidget {
   const OrderHistory({Key? key}) : super(key: key);
@@ -13,9 +11,10 @@ class OrderHistory extends StatefulWidget {
 }
 
 class _OrderHistoryState extends State<OrderHistory> {
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
-    UserModel user = Provider.of<Auth>(context, listen: false).user;
+    User? user = _auth.currentUser;
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
@@ -24,7 +23,7 @@ class _OrderHistoryState extends State<OrderHistory> {
       body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection("users")
-              .doc(user.uid)
+              .doc(user?.uid)
               .collection("orders")
               .snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {

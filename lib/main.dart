@@ -55,7 +55,13 @@ class MyApp extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting)
             return Scaffold(
                 body: Center(
-              child: CircularProgressIndicator(),
+              child: Column(
+                children: [
+                  Text("Please wait"),
+                  SizedBox(height: 10),
+                  CircularProgressIndicator(),
+                ],
+              ),
             ));
           if (snapshot.hasData) {
             return FutureBuilder(
