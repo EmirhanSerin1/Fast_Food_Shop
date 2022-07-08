@@ -61,86 +61,67 @@ class _AddressState extends State<Address> {
             flex: 90,
             child: ListView(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 18, left: 8, right: 8),
-                  child: Container(
-                    height: 150,
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16),
-                        bottomRight: Radius.circular(16),
-                      ),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.red.withOpacity(0.2),
-                          offset: Offset(0, 3),
-                          blurRadius: 3,
-                        )
-                      ],
-                    ),
-                    child: ListView(
+                ListView(
+                  physics: ScrollPhysics(),
+                  shrinkWrap: true,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 4, 8, 0),
-                              child: Text(
-                                "Address",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ],
-                        ),
-                        StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user?.uid)
-                              .collection("address")
-                              .snapshots(),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (!snapshot.hasData) {
-                              return buildEmptyAddress();
-                            } else if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return SizedBox();
-                            } else {
-                              List<QueryDocumentSnapshot> doc =
-                                  snapshot.data.docs;
-
-                              if (doc.isNotEmpty) {
-                                DocumentSnapshot ds = snapshot.data.docs[0];
-                                addressForSendPayment.country = ds["country"];
-                                addressForSendPayment.city = ds["city"];
-                                addressForSendPayment.street = ds["street"];
-                                addressForSendPayment.district = ds["district"];
-                                addressForSendPayment.buildingNumber =
-                                    ds["buildingNumber"];
-                                addressForSendPayment.flatNumber =
-                                    ds["flatNumber"];
-                                addressForSendPayment.other = ds["other"];
-                                return buildAddress(
-                                  ds["country"],
-                                  ds["city"],
-                                  ds["district"],
-                                  ds["street"],
-                                  ds["buildingNumber"],
-                                  ds["flatNumber"],
-                                  ds["other"],
-                                );
-                              } else {
-                                return buildEmptyAddress();
-                              }
-                            }
-                          },
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 4, 8, 0),
+                          child: Text(
+                            "Address",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user?.uid)
+                          .collection("address")
+                          .snapshots(),
+                      builder:
+                          (BuildContext context, AsyncSnapshot snapshot) {
+                        if (!snapshot.hasData) {
+                          return buildEmptyAddress();
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return SizedBox();
+                        } else {
+                          List<QueryDocumentSnapshot> doc =
+                              snapshot.data.docs;
+
+                          if (doc.isNotEmpty) {
+                            DocumentSnapshot ds = snapshot.data.docs[0];
+                            addressForSendPayment.country = ds["country"];
+                            addressForSendPayment.city = ds["city"];
+                            addressForSendPayment.street = ds["street"];
+                            addressForSendPayment.district = ds["district"];
+                            addressForSendPayment.buildingNumber =
+                                ds["buildingNumber"];
+                            addressForSendPayment.flatNumber =
+                                ds["flatNumber"];
+                            addressForSendPayment.other = ds["other"];
+                            return buildAddress(
+                              ds["country"],
+                              ds["city"],
+                              ds["district"],
+                              ds["street"],
+                              ds["buildingNumber"],
+                              ds["flatNumber"],
+                              ds["other"],
+                            );
+                          } else {
+                            return buildEmptyAddress();
+                          }
+                        }
+                      },
+                    ),
+                  ],
                 ),
                 AddressEdit()
               ],
